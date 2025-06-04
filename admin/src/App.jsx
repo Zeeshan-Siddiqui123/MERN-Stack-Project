@@ -9,7 +9,7 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import React from 'react';
 import Edit from './pages/Edit';
-import Delete from './pages/Delete';
+// import Delete from './pages/Delete';
 
 const App = () => {
   const isLoggedIn = localStorage.getItem('admin');
@@ -38,7 +38,7 @@ const App = () => {
           />
           <Route path="*" element={<Navigate to="/" />} />
           <Route path='/edit/:id' element={<Edit/>}/>
-          <Route path='/delete' element={<Delete/>}/>
+          {/* <Route path='/delete' element={<Delete/>}/> */}
         </Routes>
       </div>
     </div>

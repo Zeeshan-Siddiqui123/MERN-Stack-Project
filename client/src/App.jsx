@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { routes } from '../Routes'
 import Login from './screens/Login'
 import Create from './screens/Create'
+import ProductDetails from './screens/ProductDetails'
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                     ))}
                     <Route path='/create-account' element={<Create/>}/>
                     <Route path='/login' element={<Login/>}/>
+                    <Route path='/product/product-details/:id' element={<ProductDetails/>}/>
                 </Routes>
             </BrowserRouter>
 
