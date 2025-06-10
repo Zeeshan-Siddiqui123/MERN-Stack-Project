@@ -5,6 +5,7 @@ import { routes } from '../Routes'
 import Login from './screens/Login'
 import Create from './screens/Create'
 import ProductDetails from './screens/ProductDetails'
+import Footer from './components/Footer'
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/product/product-details/:id' element={<ProductDetails/>}/>
                 </Routes>
+                <Footer/>
             </BrowserRouter>
 
         </div>

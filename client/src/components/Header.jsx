@@ -8,9 +8,9 @@ const Header = () => {
 
     return (
         <div>
-            <div className='flex items-center justify-around w-[full] h-[50px] bg-black'>
+            <div className='flex items-center justify-around w-[full] h-[80px] bg-gray-900'>
                 <div className='ml-16'>
-                    <h2 className='text-white text-xl'>The Watch Hub</h2>
+                    <img src="../public/images/logo.png" alt="" className='w-[100px]'/>
                 </div>
                 <div className='flex items-center text-sm justify-center gap-7 mr-16'>
                     {routes.map(({ path, label }, index) => (

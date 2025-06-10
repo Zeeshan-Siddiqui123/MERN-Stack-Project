@@ -15,18 +15,7 @@ const Product = () => {
     fetchProducts();
   }, []);
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-    if (!confirmDelete) return;
-
-    try {
-      await axios.delete(`http://localhost:3000/product/delete/${id}`);
-      setProducts(products.filter((product) => product._id !== id));
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      alert("Failed to delete product");
-    }
-  };
+ 
   return (
     <div>
       <h1 className='text-center font-bold mb-1'>Products</h1>
@@ -53,7 +42,7 @@ const Product = () => {
               <h3 className="text-xl font-bold mb-1">{product.title}</h3>
               <p className="text-blue-600 font-semibold">Rs: {product.price}</p>
               <div className="btn">
-                <Link to={`/product/product-details/${product.name}}`}><button className='bg-black text-white mt-2 w-full p-2 rounded-lg cursor-pointer'>Order Now</button></Link>
+                <Link to={`/product/product-details/${product.title}}`}><button className='bg-black text-white mt-2 w-full p-2 rounded-lg cursor-pointer'>Order Now</button></Link>
 
               </div>
             </div>
