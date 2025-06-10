@@ -42,7 +42,7 @@ const Product = () => {
               <h3 className="text-xl font-bold mb-1">{product.title}</h3>
               <p className="text-blue-600 font-semibold">Rs: {product.price}</p>
               <div className="btn">
-                <Link to={`/product/product-details/${product.title}}`}><button className='bg-black text-white mt-2 w-full p-2 rounded-lg cursor-pointer'>Order Now</button></Link>
+                <Link to={`/product/product-details/${product._id}}`}><button className='bg-black text-white mt-2 w-full p-2 rounded-lg cursor-pointer'>Order Now</button></Link>
 
               </div>
             </div>

@@ -3,9 +3,11 @@ import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+import {  Spin } from 'antd';
 
 const Product = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true)
   const [data, setData] = useState({
     title: '',
     price: '',
@@ -67,18 +69,22 @@ const Product = () => {
     fetchProducts();
   }, []);
 
-  const handleDelete = async (id) => {
-  const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-  if (!confirmDelete) return;
-
-  try {
-    await axios.delete(`http://localhost:3000/product/delete/${id}`);
-    setProducts(products.filter((product) => product._id !== id));
-  } catch (error) {
-    console.error("Error deleting product:", error);
-    alert("Failed to delete product");
+  if (loading) {
+    return <div className='text-center mt-20'><div className='flex items-center justify-center'><Spin size='large' /></div></div>;
   }
-};
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:3000/product/delete/${id}`);
+      setProducts(products.filter((product) => product._id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert("Failed to delete product");
+    }
+  };
 
 
 
