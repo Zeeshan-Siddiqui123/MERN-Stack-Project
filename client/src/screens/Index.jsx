@@ -1,87 +1,112 @@
-import React, { useEffect, useState } from 'react'
-import { Slider } from '../Components/Slider'
-import axios from 'axios'
+import React from 'react';
+import { IoArrowForward } from "react-icons/io5";
 import { Link } from 'react-router-dom'
 
-const cardData = [
-  {
-    img: "https://incandescent-macaron-564e08.netlify.app/img/features/f2.png",
-    content: "Online Order"
-  },
-  {
-    img: "https://incandescent-macaron-564e08.netlify.app/img/features/f3.png",
-    content: "Save Money"
-  },
-  {
-    img: "https://incandescent-macaron-564e08.netlify.app/img/features/f6.png",
-    content: "24/7 Support"
-  },
-
-]
-
 const Index = () => {
-   const [products, setProducts] = useState([]);
-  const fetchProducts = () => {
-    axios
-      .get('http://localhost:3000/getproducts', { withCredentials: true })
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error('Error fetching products:', err));
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-  return (
-    <div>
-      <div>
-        <Slider />
-      </div>
-      <div className='flex items-center justify-center flex-col mt-7'>
-        <h2 className='text-3xl font-bold text-gray-900'>Why Choose US</h2>
-        <div className='flex items-center justify-center gap-10 flex-wrap mt-7'>
-          {cardData.map((data,index)=>(
-            <div key={index} className='pt-5 pb-5 pl-3 pr-3 border border-[#088178] rounded-2xl flex items-center gap-3 flex-col'>
-              <img src={data.img} alt="" className='h-[100px]'/>
-              <p className='p-1 bg-[#d1e8f2] text-[#088178] rounded-lg text-sm'>{data.content}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center justify-center flex-col mt-9">
-      <h2 className='text-3xl font-bold text-gray-900'>Featured Products</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mt-7">
-        {products.length === 0 ? (
-          <p className="text-center text-gray-900 col-span-full">No products found</p>
-        ) : (
-          products.map((product, index) => (
-            <div
-              key={index}
-              className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition"
-            >
-              {product.file ? (
-                <img
-                  src={`http://localhost:3000/images/uploads/${product.file}`}
-                  alt={product.title}
-                  className="w-full h-48 object-cover rounded-md mb-4"
-                />
-              ) : (
-                <div className="w-full h-48 bg-gray-200 rounded-md flex items-center justify-center text-gray-900">
-                  No Image
+    return (
+        <div className='bg-[#1c1d22]'>
+            <div className='relative  flex items-center justify-center overflow-hidden'>
+                <div className='flex items-center justify-between w-[90%] h-full px-10'>
+                    <div className='flex items-center justify-center w-1/3'>
+                        <img
+                            src="/images/hero_text.webp"
+                            alt="Hero Text"
+                            className='w-[250px] h-[250px] rounded-full object-cover border-4 border-white'
+                        />
+                    </div>
+                    <div className='relative flex flex-col items-center justify-center w-2/3'>
+                        <div className='relative mr-115 flex items-center mt-30 justify-center gap-10 z-10'>
+                            <img
+                                src="/images/hero_watch.webp"
+                                alt="Watch 1"
+                                className='w-[300px] transform rotate-[-20deg]'
+                            />
+                            <img
+                                src="/images/hero_watch.webp"
+                                alt="Watch 2"
+                                className='w-[300px] transform rotate-[15deg]'
+                            />
+                        </div>
+                        <p className='text-white text-6xl font-bold text-center mr-115 mt-6 z-10 font-sans'>
+                            Limited Edition Of High Quality Watches
+                        </p>
+                        <p className='text-white text-2xl  text-center mr-115 mt-6 z-10 font-sans'>
+                            Timeless design, crafted to perfection
+                        </p>
+                    </div>
                 </div>
-              )}
-              <h3 className="text-xl font-bold mb-1">{product.title}</h3>
-              <p className="text-blue-600 font-semibold">Rs: {product.price}</p>
-              <div className="btn">
-                <Link to={`/product/product-details/${product.title}}`}><button className='bg-gray-900 text-white mt-2 w-full p-2 rounded-lg cursor-pointer'>Order Now</button></Link>
-
-              </div>
+                <img
+                    src="/images/hero_bg.svg"
+                    alt=""
+                    className="absolute bottom-0 left-0 w-full opacity-10 pointer-events-none"
+                />
             </div>
-          ))
-        )}
-      </div>
-      </div>
-    </div>
-  )
-}
+            <div className='flex items-center justify-center flex-wrap mt-10'>
+                <div className="relative w-fit">
+                    <img src="/images/couples.webp" alt="" className='w-[600px] h-[392.24px]' />
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[500px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+                        <div className='flex flex-col ml-2'>
+                            <p className='text-black font-sans'>Couple's Best Seller</p>
+                            <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
+                        </div>
+                        <Link to='/products'>
+                            <div className='group border-l border-l-black w-[100px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
+                                <IoArrowForward
+                                    size={50}
+                                    className='text-black group-hover:text-white transition duration-300'
+                                />
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+                <div className="relative w-fit">
+                    <img src="/images/men.webp" alt="" className='w-[600px]' />
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[500px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+                        <div className='flex flex-col ml-2'>
+                            <p className='text-black font-sans'>Men's Best Seller</p>
+                            <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
+                        </div>
+                        <Link to='/products'>
+                            <div className='group border-l border-l-black w-[100px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
+                                <IoArrowForward
+                                    size={50}
+                                    className='text-black group-hover:text-white transition duration-300'
+                                />
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+                <div className="relative w-fit">
+                    <img src="/images/women.webp" alt="" className="w-[600px]" />
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[500px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+                        <div className='flex flex-col ml-2'>
+                            <p className='text-black font-sans'>Women's Best Seller</p>
+                            <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
+                        </div>
+                        <Link to='/products'>
+                            <div className='group border-l border-l-black w-[100px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
+                                <IoArrowForward
+                                    size={50}
+                                    className='text-black group-hover:text-white transition duration-300'
+                                />
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+            <div className='flex mt-2'>
+                <img src="/images/ss.png" alt="" />
+                <div className='flex flex-col items-center'>
+                    <div>
+                        <p className='text-white font-bold text-5xl'>TO Day Offer</p>
+                        <p className='text-white '>Hurry Up, The Deal Will End Soon</p>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
 
-export default Index
+    );
+};
+
+export default Index;
