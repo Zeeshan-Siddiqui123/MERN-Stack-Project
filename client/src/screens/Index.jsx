@@ -43,14 +43,14 @@ const Index = () => {
             </div>
             <div className='flex items-center justify-center flex-wrap mt-10'>
                 <div className="relative w-fit">
-                    <img src="/images/couples.webp" alt="" className='w-[600px] h-[392.24px]' />
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[500px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+                    <img src="/images/couples.webp" alt="" className='w-[500px] h-[326.95px]' />
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
                         <div className='flex flex-col ml-2'>
                             <p className='text-black font-sans'>Couple's Best Seller</p>
                             <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
                         </div>
                         <Link to='/products'>
-                            <div className='group border-l border-l-black w-[100px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
+                            <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
                                 <IoArrowForward
                                     size={50}
                                     className='text-black group-hover:text-white transition duration-300'
@@ -60,14 +60,14 @@ const Index = () => {
                     </div>
                 </div>
                 <div className="relative w-fit">
-                    <img src="/images/men.webp" alt="" className='w-[600px]' />
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[500px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+                    <img src="/images/men.webp" alt="" className='w-[500px]' />
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
                         <div className='flex flex-col ml-2'>
                             <p className='text-black font-sans'>Men's Best Seller</p>
                             <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
                         </div>
                         <Link to='/products'>
-                            <div className='group border-l border-l-black w-[100px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
+                            <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
                                 <IoArrowForward
                                     size={50}
                                     className='text-black group-hover:text-white transition duration-300'
@@ -77,14 +77,14 @@ const Index = () => {
                     </div>
                 </div>
                 <div className="relative w-fit">
-                    <img src="/images/women.webp" alt="" className="w-[600px]" />
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[500px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+                    <img src="/images/women.webp" alt="" className="w-[500px]" />
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
                         <div className='flex flex-col ml-2'>
                             <p className='text-black font-sans'>Women's Best Seller</p>
                             <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
                         </div>
                         <Link to='/products'>
-                            <div className='group border-l border-l-black w-[100px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
+                            <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
                                 <IoArrowForward
                                     size={50}
                                     className='text-black group-hover:text-white transition duration-300'
