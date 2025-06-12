@@ -2,9 +2,9 @@ import React from 'react'
 import Header from './components/Header'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { routes } from '../Routes'
-import Login from './screens/Login'
-import Create from './screens/Create'
-import ProductDetails from './screens/ProductDetails'
+// import Login from './screens/Login'
+// import Create from './screens/Create'
+// import ProductDetails from './screens/ProductDetails'
 import Footer from './components/Footer'
 
 const App = () => {
@@ -16,9 +16,9 @@ const App = () => {
                     {routes.map(({ path, screen }, index) => (
                         <Route key={index} path={path} element={screen} />
                     ))}
-                    <Route path='/create-account' element={<Create/>}/>
+                    {/* <Route path='/create-account' element={<Create/>}/>
                     <Route path='/login' element={<Login/>}/>
-                    <Route path='/product/product-details/:id' element={<ProductDetails/>}/>
+                    <Route path='/product/product-details/:id' element={<ProductDetails/>}/> */}
                 </Routes>
                 <Footer/>
             </BrowserRouter>
