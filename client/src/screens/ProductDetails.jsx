@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { MdOutlineShoppingCart } from 'react-icons/md';
+import { CartContext } from '../screens/CartContext';
 import { LuBus } from "react-icons/lu";
 import { Button, Spin } from 'antd';
+import { useContext } from 'react';
 
 const ProductDetails = () => {
   const { id } = useParams(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { addToCart } = useContext(CartContext);
 
   const fetchProduct = async () => {
   try {
@@ -55,11 +58,16 @@ const ProductDetails = () => {
         <p className='text-md mb-6'><strong>Description:</strong> {product.description}</p>
         <p className='text-md mb-6'><strong>Category:</strong> {product.category}</p>
         <div className='flex flex-wrap gap-4 mb-4'>
-          <Button type='primary' className='bg-yellow-500 flex items-center'>
+          
+          <Button type='primary' className='bg-yellow-500 flex items-center' onClick={() =>{
+            console.log("Adding to cart:", product); addToCart(product)
+          } }>
             <MdOutlineShoppingCart size={20} className='text-white' />
             <span className='ml-2'>Add to Cart</span>
           </Button>
-          <Button type='primary' className='bg-[#f49521] flex items-center'>
+          
+          
+          <Button type='primary' className='bg-[#f49521] flex items-center' >
             <LuBus size={20} className='text-white' />
             <span className='ml-2'>Order Now</span>
           </Button>

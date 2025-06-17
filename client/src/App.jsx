@@ -10,6 +10,7 @@ import Men from './screens/Men'
 import Women from './screens/Women'
 import Couple from './screens/Couple'
 import Product from './screens/Product'
+import Cart from './screens/Cart'
 
 const App = () => {
     return (
@@ -28,6 +29,7 @@ const App = () => {
                     {/* <Route path='/create-account' element={<Create/>}/>
                     <Route path='/login' element={<Login/>}/>  */}
                      <Route path='/product-details/:id' element={<ProductDetails/>}/> 
+                     <Route path='/cart' element={<Cart/>}/>
                 </Routes>
                 <Footer />
             </BrowserRouter>

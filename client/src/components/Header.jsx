@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { routes } from '../../Routes'
 import { IoCartOutline, IoSearch } from "react-icons/io5";
 
@@ -17,16 +17,19 @@ const Header = () => {
                     ))}
                 </div>
                 <div>
-                    <img src="../public/images/logo.png" alt="" className='w-[140px]'/>
+                    <img src="../public/images/logo.png" alt="" className='w-[140px]' />
                 </div>
                 <div className='flex gap-4 items-center'>
-                    <IoSearch color='white' size={30}/>
+                    <IoSearch color='white' size={30} />
                     <NavLink to='/create-account' className={({ isActive }) =>
                         isActive ? 'text-amber-900   nav-link' : 'text-black  nav-link '
                     }>
                         <button className='bg-white p-2 w-25 rounded-lg   hover:bg-black hover:text-white border border-white cursor-pointer transition duration-300'>Sign Up</button>
                     </NavLink>
-                    <IoCartOutline color='white' size={30} className='hover:text-amber-900'/>
+                    <Link to='/cart'>
+                        <IoCartOutline color='white' size={30} />
+                    </Link>
+
                 </div>
             </div>
         </div>
