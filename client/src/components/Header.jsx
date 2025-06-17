@@ -10,7 +10,7 @@ const Header = () => {
                 <div className='flex items-center text-sm justify-center gap-7 mr-16'>
                     {routes.map(({ path, label }, index) => (
                         <NavLink key={index} to={path} className={({ isActive }) =>
-                            isActive ? 'text-amber-900   nav-link' : 'text-white  nav-link '
+                            isActive ? 'text-[#795b50]   nav-link' : 'text-white  nav-link '
                         }>
                             {label}
                         </NavLink>
@@ -24,7 +24,7 @@ const Header = () => {
                     <NavLink to='/create-account' className={({ isActive }) =>
                         isActive ? 'text-amber-900   nav-link' : 'text-black  nav-link '
                     }>
-                        <button className='bg-white p-2 w-25 rounded-lg cursor-pointer'>Sign Up</button>
+                        <button className='bg-white p-2 w-25 rounded-lg   hover:bg-black hover:text-white border border-white cursor-pointer transition duration-300'>Sign Up</button>
                     </NavLink>
                     <IoCartOutline color='white' size={30} className='hover:text-amber-900'/>
                 </div>

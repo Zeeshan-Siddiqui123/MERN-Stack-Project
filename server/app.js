@@ -47,7 +47,7 @@ app.post('/register', upload.single('file'), async (req, res) => {
       file: req.file?.filename || '',
       password: hash
     });
-
+    console.log(user.json );
     res.status(201).json({ message: 'User registered successfully' });
 
   } catch (error) {
@@ -89,9 +89,9 @@ app.post('/login', async (req, res) => {
 
 app.post('/products', upload.single('file'), async (req, res) => {
   try {
-    const { title, price, description } = req.body
+    const { title, price, description, category } = req.body
     const product = await productModel.create({
-      title, price, description, file: req.file?.filename || ''
+      title, price, description, category, file: req.file?.filename || ''
     })
     res.status(201).json({ message: 'Product registered successfully' });
   } catch (error) {
@@ -110,14 +110,30 @@ app.get('/getproducts', async (req, res) => {
   }
 })
 
+app.get("/getproduct/:id", async (req, res) => {
+  const product = await productModel.findById(req.params.id);
+  res.json(product);
+});
+
+app.get('/products/category', async (req, res) => {
+  try {
+    const categoryName = req.query.name; // e.g., Male, Female, Couple
+    const products = await productModel.find({ category: categoryName });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error fetching products by category:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // POST /product/update/:id
 app.post('/product/update/:id', async (req, res) => {
   try {
-    const { title, price, description } = req.body;
-    
+    const { title, price, description, category } = req.body;
+
     const updated = await productModel.findByIdAndUpdate(
       req.params.id,
-      { title, price, description },
+      { title, price, description, category },
       { new: true }
     );
 
@@ -134,8 +150,8 @@ app.post('/product/update/:id', async (req, res) => {
 
 app.delete('/product/delete/:id', async (req, res) => {
   try {
-    const deleted = await productModel.findByIdAndDelete( req.params.id )
-    if(!deleted){
+    const deleted = await productModel.findByIdAndDelete(req.params.id)
+    if (!deleted) {
       return res.status(404).json({ message: 'Product not Deleted' });
     }
     res.status(201).json({ message: 'Product Deleted successfully' });

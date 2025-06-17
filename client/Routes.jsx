@@ -18,7 +18,7 @@ export const routes = [
     {
         path: '/products',
         screen : <Product/>,
-        label: 'Products'
+        label: 'Shop'
     },
     {
         path: '/contact',

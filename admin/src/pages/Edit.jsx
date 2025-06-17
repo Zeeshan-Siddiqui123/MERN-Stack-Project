@@ -10,7 +10,10 @@ const Edit = () => {
     title: '',
     price: '',
     description: '',
+    category: ''
   });
+
+  const [error, setError] = useState('');
 
   useEffect(() => {
     axios.get(`http://localhost:3000/product/${id}`)
@@ -20,6 +23,7 @@ const Edit = () => {
           title: product.title,
           price: product.price,
           description: product.description,
+          category: product.category,
         });
       })
       .catch(err => {
@@ -34,6 +38,13 @@ const Edit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { title, price, description, category } = data;
+
+    if (!title || !price || !description || !category) {
+      setError('All fields are required');
+      setTimeout(() => setError(''), 2000);
+      return;
+    }
 
     try {
       await axios.post(`http://localhost:3000/product/update/${id}`, data);
@@ -48,9 +59,11 @@ const Edit = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-lg mx-auto bg-white p-6 rounded shadow"
+      className="max-w-lg mx-auto bg-white p-6 rounded shadow mt-10"
     >
       <h2 className="text-xl font-bold mb-4">Edit Product</h2>
+
+      {error && <p className="text-red-600 mb-3">{error}</p>}
 
       <input
         type="text"
@@ -75,6 +88,15 @@ const Edit = () => {
         value={data.description}
         onChange={handleChange}
         placeholder="Description"
+        className="w-full mb-3 p-2 border rounded"
+      />
+
+      <input
+        type="text"
+        name="category"
+        value={data.category}
+        onChange={handleChange}
+        placeholder="Category"
         className="w-full mb-3 p-2 border rounded"
       />
 

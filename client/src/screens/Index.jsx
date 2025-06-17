@@ -49,7 +49,7 @@ const Index = () => {
                             <p className='text-black font-sans'>Couple's Best Seller</p>
                             <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
                         </div>
-                        <Link to='/products'>
+                        <Link to='/products/couple'>
                             <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
                                 <IoArrowForward
                                     size={50}
@@ -66,7 +66,7 @@ const Index = () => {
                             <p className='text-black font-sans'>Men's Best Seller</p>
                             <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
                         </div>
-                        <Link to='/products'>
+                        <Link to='/products/men'>
                             <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
                                 <IoArrowForward
                                     size={50}
@@ -83,7 +83,7 @@ const Index = () => {
                             <p className='text-black font-sans'>Women's Best Seller</p>
                             <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
                         </div>
-                        <Link to='/products'>
+                        <Link to='/products/women'>
                             <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
                                 <IoArrowForward
                                     size={50}
@@ -94,14 +94,21 @@ const Index = () => {
                     </div>
                 </div>
             </div>
-            <div className='flex mt-2'>
+            <div className='flex mt-2 gap-3'>
                 <img src="/images/ss.png" alt="" />
-                <div className='flex flex-col items-center'>
+                <div className='flex flex-col items-start gap-10 justify-center'>
                     <div>
                         <p className='text-white font-bold text-5xl'>TO Day Offer</p>
-                        <p className='text-white '>Hurry Up, The Deal Will End Soon</p>
+                        <p className='text-white mt-1'>Hurry Up, The Deal Will End Soon</p>
                     </div>
-                    <div></div>
+                    <div>
+                        <p className='text-red-500 font-bold text-2xl'>Unbeatable Prices on Premium Timepieces!</p>
+                    </div>
+                    <div>
+                        <Link to='/products'>
+                            <button className='bg-white text-black px-12 py-5 hover:bg-black hover:text-white border border-white cursor-pointer transition duration-300 '>View All Product</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
