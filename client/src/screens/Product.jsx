@@ -22,8 +22,8 @@ const Product = () => {
 
       <div className='flex items-center justify-center flex-wrap mt-5'>
         <div className="relative w-fit">
-          <img src="/images/couples.webp" alt="" className='w-[500px] h-[326.95px]' />
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+          <img src="/images/couples.webp" alt="" className='lg:w-[400px] lg:h-[326.95px] md:w-[400px] w-[300px]' />
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white md:w-[300px] lg:w-[350px] h-[80px] w-[200px] rounded-md shadow-md flex justify-between items-center ">
             <div className='flex flex-col ml-2'>
               <p className='text-black font-sans'>Couple's Best Seller</p>
               <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
@@ -40,8 +40,8 @@ const Product = () => {
           </div>
         </div>
         <div className="relative w-fit">
-          <img src="/images/men.webp" alt="" className='w-[500px]' />
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+          <img src="/images/men.webp" alt="" className='lg:w-[400px] lg:h-[326.95px] md:w-[400px] w-[300px]' />
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white md:w-[300px] lg:w-[350px] h-[80px] w-[200px] rounded-md shadow-md flex justify-between items-center ">
             <div className='flex flex-col ml-2'>
               <p className='text-black font-sans'>Men's Best Seller</p>
               <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
@@ -58,8 +58,8 @@ const Product = () => {
           </div>
         </div>
         <div className="relative w-fit">
-          <img src="/images/women.webp" alt="" className="w-[500px]" />
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
+          <img src="/images/women.webp" alt="" className="lg:w-[400px] lg:h-[326.95px] md:w-[400px] w-[300px]" />
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white md:w-[300px] lg:w-[350px] h-[80px] w-[200px] rounded-md shadow-md flex justify-between items-center ">
             <div className='flex flex-col ml-2'>
               <p className='text-black font-sans'>Women's Best Seller</p>
               <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
