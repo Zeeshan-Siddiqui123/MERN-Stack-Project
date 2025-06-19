@@ -4,28 +4,28 @@ import axios from 'axios';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { CartContext } from '../screens/CartContext';
 import { LuBus } from "react-icons/lu";
-import { Button, Spin } from 'antd';
+import { Button, message, Spin } from 'antd';
 import { useContext } from 'react';
 
 const ProductDetails = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useContext(CartContext);
 
   const fetchProduct = async () => {
-  try {
-    setLoading(true);
-    const res = await axios.get(`http://localhost:3000/getproduct/${id}`, {
-      withCredentials: true,
-    });
-    setProduct(res.data);
-  } catch (err) {
-    console.error('Error fetching product:', err);
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      setLoading(true);
+      const res = await axios.get(`http://localhost:3000/getproduct/${id}`, {
+        withCredentials: true,
+      });
+      setProduct(res.data);
+    } catch (err) {
+      console.error('Error fetching product:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
 
@@ -44,7 +44,7 @@ const ProductDetails = () => {
 
 
   return (
-    <div className='container mx-auto p-4 flex flex-col md:flex-row mt-16'>
+    <div className='container  mx-auto p-4 flex flex-col md:flex-row mt-20'>
       <div className='flex-1 flex justify-center'>
         <img
           src={`http://localhost:3000/images/uploads/${product.file}`}
@@ -58,15 +58,20 @@ const ProductDetails = () => {
         <p className='text-md mb-6'><strong>Description:</strong> {product.description}</p>
         <p className='text-md mb-6'><strong>Category:</strong> {product.category}</p>
         <div className='flex flex-wrap gap-4 mb-4'>
-          
-          <Button type='primary' className='bg-yellow-500 flex items-center' onClick={() =>{
-            console.log("Adding to cart:", product); addToCart(product)
-          } }>
+
+          <Button
+            type='primary'
+            className='bg-yellow-500 flex items-center'
+            onClick={() => {
+              addToCart(product);  // product._id handled in context
+              message.success(`${product.title} added to cart`);
+            }}
+          >
             <MdOutlineShoppingCart size={20} className='text-white' />
             <span className='ml-2'>Add to Cart</span>
           </Button>
-          
-          
+
+
           <Button type='primary' className='bg-[#f49521] flex items-center' >
             <LuBus size={20} className='text-white' />
             <span className='ml-2'>Order Now</span>

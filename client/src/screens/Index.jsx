@@ -8,29 +8,29 @@ const Index = () => {
             <div className='relative  flex items-center justify-center overflow-hidden'>
                 <div className='flex items-center justify-between w-[90%] h-full px-10'>
                     <div className='flex items-center justify-center w-1/3'>
-                        <img
+                        {/* <img
                             src="/images/hero_text.webp"
                             alt="Hero Text"
                             className='w-[250px] h-[250px] rounded-full object-cover border-4 border-white'
-                        />
+                        /> */}
                     </div>
                     <div className='relative flex flex-col items-center justify-center w-2/3'>
                         <div className='relative mr-115 flex items-center mt-30 justify-center gap-10 z-10'>
                             <img
                                 src="/images/hero_watch.webp"
                                 alt="Watch 1"
-                                className='w-[300px] transform rotate-[-20deg]'
+                                className='w-[300px] transform rotate-[-20deg] '
                             />
                             <img
                                 src="/images/hero_watch.webp"
                                 alt="Watch 2"
-                                className='w-[300px] transform rotate-[15deg]'
+                                className='w-[300px] transform rotate-[15deg] '
                             />
                         </div>
-                        <p className='text-white text-6xl font-bold text-center mr-115 mt-6 z-10 font-sans'>
+                        <p className='text-white text-6xl  font-bold text-center mr-115 mt-6 z-10 font-sans'>
                             Limited Edition Of High Quality Watches
                         </p>
-                        <p className='text-white text-2xl  text-center mr-115 mt-6 z-10 font-sans'>
+                        <p className='text-yellow-400 font-bold text-2xl typewriter  text-center mr-115 mt-6 z-10 font-sans'>
                             Timeless design, crafted to perfection
                         </p>
                     </div>
@@ -38,7 +38,8 @@ const Index = () => {
                 <img
                     src="/images/hero_bg.svg"
                     alt=""
-                    className="absolute bottom-0 left-0 w-full opacity-10 pointer-events-none"
+                    className="absolute bottom-0 left-0 min-w-full  opacity-10 pointer-events-none"
+                    style={{ animation: 'spin 20s linear infinite' }}
                 />
             </div>
             <div className='flex items-center justify-center flex-wrap mt-10'>

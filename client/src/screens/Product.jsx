@@ -4,7 +4,7 @@ import { Link, Outlet } from 'react-router-dom'
 
 const Product = () => {
   return (
-    <div className='bg-[#1c1d22] p-2'>
+    <div className='bg-[#1c1d22] mt-22 p-2'>
       <h1 className='text-white text-center font-bold text-5xl'>Our Product</h1>
       <h3 className="text-white/80 text-2xl text-center mt-4">
         Unbeatable Prices on Premium Timepieces!

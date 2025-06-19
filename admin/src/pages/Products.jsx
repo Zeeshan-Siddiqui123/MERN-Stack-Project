@@ -187,7 +187,7 @@ const Product = () => {
                   src={`http://localhost:3000/images/uploads/${product.file}`}
                   alt={product.title}
                   onError={(e) => { e.target.src = '/fallback.jpg'; }}
-                  className="w-full h-48 object-cover rounded-md mb-4"
+                  className="w-full bg-black h-48 object-cover rounded-md mb-4"
                 />
               ) : (
                 <div className="w-full h-48 bg-gray-200 rounded-md flex items-center justify-center text-gray-500">
