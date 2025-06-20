@@ -49,7 +49,7 @@ const Header = () => {
 
         {/* Cart Icon with Badge */}
         <Link to='/cart' className="relative">
-          <IoCartOutline color='white' size={30} />
+          <IoCartOutline color='orange' size={30} />
           {totalQuantity >= 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
               {totalQuantity}
