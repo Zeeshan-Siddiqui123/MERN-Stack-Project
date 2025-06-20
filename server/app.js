@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
 const path = require("path")
 const upload = require("./config/multerconfig")
+const Order = require("./models/Order")
+const mongoose = require('mongoose')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -47,7 +49,7 @@ app.post('/register', upload.single('file'), async (req, res) => {
       file: req.file?.filename || '',
       password: hash
     });
-    console.log(user.json );
+    console.log(user.json);
     res.status(201).json({ message: 'User registered successfully' });
 
   } catch (error) {
@@ -160,5 +162,30 @@ app.delete('/product/delete/:id', async (req, res) => {
     res.status(500).json({ message: 'Server Error', error });
   }
 })
+
+app.get('/orders', async (req, res) => {
+  try {
+    const orders = await Order.find().populate('user', 'name email');
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+app.get('/related/:category/:productId', async (req, res) => {
+  const { category, productId } = req.params;
+
+  try {
+    const relatedProducts = await productModel.find({
+      category: category,
+      _id: { $ne: new mongoose.Types.ObjectId(productId) }
+    }).limit(4);
+
+    res.json(relatedProducts);
+  } catch (err) {
+    console.error("Error in /related route:", err.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.listen(3000)

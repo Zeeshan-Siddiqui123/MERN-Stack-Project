@@ -9,6 +9,8 @@ import Women from './screens/Women';
 import Couple from './screens/Couple';
 import Product from './screens/Product';
 import Cart from './screens/Cart';
+// import OrderTransactions from './screens/OrderTransactions';
+import Payment from './Payment';
 
 const App = () => {
     return (
@@ -28,6 +30,7 @@ const App = () => {
                             <Route path='/products/couple' element={<Couple />} />
                         </Route>
                         <Route path='/product-details/:id' element={<ProductDetails />} />
+                        <Route path='/payment' element={<Payment />} />
                         <Route path='/cart' element={<Cart />} />
                     </Routes>
                 </main>

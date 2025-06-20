@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { CartContext } from './CartContext';
 import { MdDelete } from "react-icons/md";
 import { Modal, Button } from 'antd';
+import { Link } from 'react-router-dom'
 
 const Cart = () => {
   const { cart, removeFromCart, updateCart, clearCart } = useContext(CartContext);
@@ -34,10 +35,10 @@ const Cart = () => {
     Modal.confirm({
       title: 'Are you sure?',
       content: (
-      <span>
-        Are you sure you want to remove <b>{product.title}</b> from your cart?
-      </span>
-    ),
+        <span>
+          Are you sure you want to remove <b>{product.title}</b> from your cart?
+        </span>
+      ),
       okText: 'Yes, Remove',
       cancelText: 'Cancel',
       okType: 'danger',
@@ -139,9 +140,16 @@ const Cart = () => {
                 <span className="text-xl font-bold">Total</span>
                 <span className="text-xl font-bold text-green-400">Rs: {total.toFixed(2)}</span>
               </div>
-              <Button danger onClick={confirmClearCart} className="w-full mt-4">
-                Clear Cart
-              </Button>
+              <div className='flex flex-col gap-3'>
+                <Link to='/payment'>
+                  <button className='w-full bg-blue-500 cursor-pointer hover:bg-blue-600 text-white px-5 py-2 rounded-md'>
+                    Pay
+                  </button>
+                </Link>
+                <button onClick={confirmClearCart} className="w-full mt-4 bg-red-400 cursor-pointer hover:bg-red-500  text-white px-5 py-2 rounded-md">
+                  Clear Cart
+                </button>
+              </div>
             </div>
           </div>
 

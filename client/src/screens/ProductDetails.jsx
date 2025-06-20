@@ -1,85 +1,140 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { MdOutlineShoppingCart } from 'react-icons/md';
-import { CartContext } from '../screens/CartContext';
-import { LuBus } from "react-icons/lu";
+import { LuBus } from 'react-icons/lu';
 import { Button, message, Spin } from 'antd';
-import { useContext } from 'react';
+import { CartContext } from '../screens/CartContext';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [related, setRelated] = useState([]);
   const { addToCart } = useContext(CartContext);
-
-  const fetchProduct = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get(`http://localhost:3000/getproduct/${id}`, {
-        withCredentials: true,
-      });
-      setProduct(res.data);
-    } catch (err) {
-      console.error('Error fetching product:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`http://localhost:3000/getproduct/${id}`, { withCredentials: true });
+        setProduct(res.data);
+
+        const relatedRes = await axios.get(`http://localhost:3000/related/${res.data.category}/${res.data._id}`, { withCredentials: true });
+        setRelated(relatedRes.data);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchProduct();
   }, [id]);
 
+  const handleOrderNow = () => {
+    navigate('/payment', {
+      state: {
+        product: { ...product, quantity: 1 }
+      }
+    });
+  };
+
   if (loading) {
     return (
-      <div className='text-center mt-20'>
-        <Spin size='large' />
+      <div className="flex items-center justify-center min-h-screen bg-[#121212] text-white">
+        <Spin size="large" />
       </div>
     );
   }
 
-
+  if (!product) {
+    return (
+      <div className="text-center text-white mt-20">Product not found.</div>
+    );
+  }
 
   return (
-    <div className='container  mx-auto p-4 flex flex-col md:flex-row mt-20'>
-      <div className='flex-1 flex justify-center'>
-        <img
-          src={`http://localhost:3000/images/uploads/${product.file}`}
-          alt={product.title}
-          className='w-[400px] h-[450px] rounded-lg shadow-lg object-cover'
-        />
-      </div>
-      <div className='flex-1 p-4'>
-        <h1 className='text-3xl font-bold mb-4'>{product.title}</h1>
-        <p className='text-lg mb-2'><strong>Price:</strong> Rs: {product.price}</p>
-        <p className='text-md mb-6'><strong>Description:</strong> {product.description}</p>
-        <p className='text-md mb-6'><strong>Category:</strong> {product.category}</p>
-        <div className='flex flex-wrap gap-4 mb-4'>
-
-          <Button
-            type='primary'
-            className='bg-yellow-500 flex items-center'
-            onClick={() => {
-              addToCart(product);  // product._id handled in context
-              message.success(`${product.title} added to cart`);
-            }}
-          >
-            <MdOutlineShoppingCart size={20} className='text-white' />
-            <span className='ml-2'>Add to Cart</span>
-          </Button>
-
-
-          <Button type='primary' className='bg-[#f49521] flex items-center' >
-            <LuBus size={20} className='text-white' />
-            <span className='ml-2'>Order Now</span>
-          </Button>
+    <div className="bg-[#1f1f1f] flex flex-col items-center justify-center min-h-screen">
+      {/* Main Product Section */}
+      <div className="w-full  p-6 space-y-16 mt-24 mx-auto md:p-10 flex flex-col md:flex-row gap-10">
+        {/* Image */}
+        <div className="flex-1 flex justify-center">
+          <img
+            src={`http://localhost:3000/images/uploads/${product.file}`}
+            alt={product.title}
+            className="w-full max-w-[400px] h-[450px] object-cover rounded-xl"
+          />
         </div>
-        <Link to="/products">
-          <Button className='bg-gray-700 text-white'>Go Back</Button>
-        </Link>
+
+        {/* Details */}
+        <div className="flex-1 space-y-6">
+          <div>
+            <h1 className="text-4xl font-boldq text-white">{product.title}</h1>
+            <p className="text-xl text-green-400 font-semibold mt-2">Rs: {product.price}</p>
+            <p className="text-gray-400 mt-1"><strong>Category:</strong> {product.category}</p>
+          </div>
+
+          <p className="text-gray-400">{product.description}</p>
+
+          <div className="flex flex-wrap gap-4 pt-4">
+            <button
+              className="bg-yellow-500 hover:bg-yellow-600 flex items-center px-4 py-2 text-white rounded-md"
+              onClick={() => {
+                addToCart(product);
+                message.success(`${product.title} added to cart`);
+              }}
+            >
+              <MdOutlineShoppingCart size={20} className="mr-2" />
+              Add to Cart
+            </button>
+
+            <Button
+              type="primary"
+              className="bg-[#f49521] hover:bg-[#e2841e] flex items-center px-5 py-2 rounded-md"
+              onClick={handleOrderNow}
+            >
+              <LuBus size={20} className="mr-2 text-white" />
+              Order Now
+            </Button>
+
+            <Link to="/products">
+              <Button className="bg-gray-700 hover:bg-gray-600 text-white px-5 py-2 rounded-md">
+                Go Back
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className='w-full  mx-auto md:p-10 flex flex-col md:flex-row gap-10'>
+        {related.length > 0 && (
+          <div className=" text-white flex-1">
+            <h2 className="text-3xl font-bold mb-6 text-white text-center">Related Products</h2>
+            <div className="flex items-center justify-center flex-wrap gap-3">
+              {related.map(item => (
+                <div key={item._id} className='w-[400px] bg-black p-3'>
+                  <div className=" shadow-md p-4 w
+                             w-[400px] flex items-center justify-center">
+                    <img
+                      src={`http://localhost:3000/images/uploads/${item.file}`}
+                      alt={item.title}
+                      className="w-full h-48 object-cover rounded"
+                    />
+
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <h3 className="mt-2 font-semibold text-lg text-white">{item.title}</h3>
+                    <p className="text-white font-medium ">Rs: {item.price}</p>
+                    <Link to={`/product-details/${item._id}`}>
+                      <button className='bg-white w-full  text-black px-12 py-3 hover:bg-black hover:text-white border border-white cursor-pointer transition duration-300 '>Order Now</button></Link>
+                  </div>
+
+                </div>
+
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
