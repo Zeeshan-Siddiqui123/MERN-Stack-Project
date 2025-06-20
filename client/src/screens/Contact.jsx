@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { MdEmail, MdPerson, MdMessage } from 'react-icons/md';
-import { FaPhone } from 'react-icons/fa';
+import { MdEmail, MdPerson, MdMessage, MdOutlinePhone } from 'react-icons/md';
 import axios from 'axios';
 
 const Contact = () => {
@@ -28,13 +27,13 @@ const Contact = () => {
     <div className="min-h-screen bg-[#121212] text-white p-6 ">
       <div className="max-w-2xl mx-auto bg-[#1f1f1f] rounded-lg shadow-lg p-8 mt-36">
         <div className='flex  gap-2 justify-center'>
-          
+          <div>
+            <MdOutlinePhone className=" text-green-400" size={30}/>
+          </div>
           <div>
             <h2 className="text-3xl font-bold mb-6 text-center"> Contact Us</h2>
           </div>
-          <div>
-            <FaPhone className=" text-green-400" size={30}/>
-          </div>
+          
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex items-center bg-[#2a2a2a] p-3 rounded">
@@ -64,7 +63,7 @@ const Contact = () => {
           </div>
 
           <div className="flex items-center bg-[#2a2a2a] p-3 rounded">
-            <FaPhone className="text-xl mr-3 text-green-400" />
+            <MdOutlinePhone className="text-xl mr-3 text-green-400" />
             <input
               type="text"
               name="phone"
