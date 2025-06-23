@@ -67,6 +67,19 @@ app.get('/getusers', async (req, res) => {
   }
 })
 
+app.get('/api/profile/:userId', async (req, res) => {
+  const user = await userModel.findById(req.params.userId);
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  res.json({
+    user: {
+      name: user.name,
+      image: `http://localhost:3000/images/uploads/${user.file}`
+    }
+  });
+});
+
+
 app.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body
@@ -78,7 +91,7 @@ app.post('/login', async (req, res) => {
       if (result) {
         let token = jwt.sign({ email: existingUser.email, userid: existingUser._id }, 'key')
         res.cookie("token", token)
-        res.status(201).json({ message: "You can login", token })
+        res.status(201).json({ message: "You can login", token, userId: existingUser._id })
       } else {
         res.status(401).json({ message: "Incorrect email or password" })
       }
@@ -88,6 +101,11 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server Error', error });
   }
 })
+
+app.post('/logout', (req, res) => {
+  res.clearCookie('token'); // name must match what was set in /login
+  res.status(200).json({ message: 'Logged out successfully' });
+});
 
 app.post('/products', upload.single('file'), async (req, res) => {
   try {
