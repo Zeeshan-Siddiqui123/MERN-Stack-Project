@@ -1,15 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from './UserContext';
+import { message } from 'antd';
 import { Link } from 'react-router-dom';
 
 const Women = () => {
   const [products, setProducts] = useState([]);
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:3000/products/category?name=Women')
       .then(res => setProducts(res.data))
       .catch(err => console.log(err));
   }, []);
+
+   const handleProtectedClick = (productId) => {
+      if (!user) {
+        message.warning("Please login to view product");
+        navigate('/login');
+        return;
+      }
+  
+      navigate(`/product-details/${productId}`);
+    };
 
   return (
     <div className="p-6">
@@ -33,7 +48,7 @@ const Women = () => {
                 <h3 className="mt-2 font-semibold text-lg text-white">{product.title}</h3>
                 <p className="text-white font-medium ">Rs: {product.price}</p>
                 <Link to={`/product-details/${product._id}`}>
-                <button className='bg-white w-full  text-black px-12 py-3 hover:bg-black hover:text-white border border-white cursor-pointer transition duration-300 '>Order Now</button></Link>
+                  <button onClick={() => handleProtectedClick(product._id)} className='bg-white w-full  text-black px-12 py-3 hover:bg-black hover:text-white border border-white cursor-pointer transition duration-300 '>Order Now</button></Link>
               </div>
 
             </div>

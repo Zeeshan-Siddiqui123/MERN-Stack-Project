@@ -18,7 +18,7 @@ const Users = () => {
                     <thead className="bg-gray-200">
                         <tr>
                             <th className="py-3 px-5 text-left">#</th>
-                            <th className="py-3 px-5 text-left">Picture</th>
+                            <th className="py-3 px-5 text-left">User Id</th>
                             <th className="py-3 px-5 text-left">Name</th>
                             <th className="py-3 px-5 text-left">Username</th>
                             <th className="py-3 px-5 text-left">Email</th>
@@ -33,19 +33,7 @@ const Users = () => {
                             users.map((user, index) => (
                                 <tr key={index} className="border-b hover:bg-gray-100">
                                     <td className="py-3 px-5">{index + 1}</td>
-                                    <td className="py-2 px-4">
-                                        {user.file ? (
-                                            <img
-                                                src={`http://localhost:3000/images/uploads/${user.file}`}
-                                                alt="User"
-                                                className="w-12 h-12 rounded-full object-cover"
-                                            />
-
-                                        ) : (
-                                            <span>No Image</span>
-                                        )}
-                                    </td>
-
+                                    <td className="py-3 px-5">{user._id}</td>
                                     <td className="py-3 px-5">{user.name}</td>
                                     <td className="py-3 px-5">{user.username}</td>
                                     <td className="py-3 px-5">{user.email}</td>

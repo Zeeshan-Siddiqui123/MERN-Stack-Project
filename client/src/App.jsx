@@ -12,6 +12,7 @@ import Cart from './screens/Cart';
 import Payment from './Payment';
 import Login from './screens/Login';
 import Account from './screens/Account';
+import PrivateRoute from './screens/PrivateRoute';
 
 const App = () => {
     return (
@@ -30,11 +31,15 @@ const App = () => {
                             <Route path='/products/women' element={<Women />} />
                             <Route path='/products/couple' element={<Couple />} />
                         </Route>
-                        <Route path='/signup' element={<Account/>}/>
-                        <Route path='/login' element={<Login/>}/>
-                        <Route path='/product-details/:id' element={<ProductDetails />} />
+                        <Route path='/signup' element={<Account />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/product-details/:id' element={<PrivateRoute><ProductDetails /></PrivateRoute>} />
                         <Route path='/payment' element={<Payment />} />
-                        <Route path='/cart' element={<Cart />} />
+                        <Route path="/cart" element={
+                            <PrivateRoute>
+                                <Cart />
+                            </PrivateRoute>
+                        } />
                     </Routes>
                 </main>
 

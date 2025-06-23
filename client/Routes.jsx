@@ -3,6 +3,7 @@ import About from "./src/screens/About";
 import Contact from "./src/screens/Contact";
 import Home from "./src/screens/Index";
 import Product from "./src/screens/Product";
+import PrivateRoute from "./src/screens/PrivateRoute";
 
 export const routes = [
     {
@@ -22,7 +23,7 @@ export const routes = [
     },
     {
         path: '/contact',
-        screen : <Contact/>,
+        screen : <PrivateRoute><Contact/></PrivateRoute>,
         label: 'Contact'
     },
 ]
