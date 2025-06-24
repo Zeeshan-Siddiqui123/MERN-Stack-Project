@@ -70,7 +70,7 @@ const Cart = () => {
   if (loading) return null;
 
   return (
-    <div className="w-full mt-22 px-4 py-6 bg-[#121212] text-white shadow-lg">
+    <div className="w-full mt-22 px-4 py-6 bg-[#121212] text-white shadow-lg animate-slide-down">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold">🛒 Your Cart</h1>
         <p className="text-gray-400">Items you've added</p>

@@ -19,8 +19,7 @@ app.use(cookieParser())
 app.use(cors({
   origin: ["http://localhost:5173", "http://localhost:5174"],
   credentials: true
-}));
-
+}))
 
 app.get("/", (req, res) => {
   res.send("Hi, I am a Server")
@@ -29,7 +28,6 @@ app.get("/", (req, res) => {
 app.post('/register', upload.single('file'), async (req, res) => {
   try {
     const { name, username, password, email } = req.body;
-
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'This Email is Already Registered' });
@@ -38,10 +36,8 @@ app.post('/register', upload.single('file'), async (req, res) => {
     if (existingUsername) {
       return res.status(400).json({ message: 'This Username is not available, please try another' });
     }
-
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-
     const user = await userModel.create({
       username,
       name,
@@ -51,7 +47,6 @@ app.post('/register', upload.single('file'), async (req, res) => {
     });
     console.log(user.json);
     res.status(201).json({ message: 'User registered successfully' });
-
   } catch (error) {
     console.error('Error creating user:', error);
     res.status(500).json({ message: 'Server Error', error });
@@ -70,7 +65,6 @@ app.get('/getusers', async (req, res) => {
 app.get('/api/profile/:userId', async (req, res) => {
   const user = await userModel.findById(req.params.userId);
   if (!user) return res.status(404).json({ message: 'User not found' });
-
   res.json({
     user: {
       name: user.name,
@@ -79,6 +73,44 @@ app.get('/api/profile/:userId', async (req, res) => {
   });
 });
 
+app.post('/api/cart/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const cart = req.body.cart;
+    const user = await userModel.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    user.cart = cart;
+    await user.save();
+    res.status(200).json({ message: 'Cart saved successfully' });
+  } catch (err) {
+    console.error('Save cart error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.get('/api/cart/:userId', async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.status(200).json({ cart: user.cart || [] });
+  } catch (err) {
+    console.error('Get cart error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.delete('/api/cart/:userId', async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    user.cart = []; 
+    await user.save();
+    res.status(200).json({ message: 'Cart cleared successfully' });
+  } catch (err) {
+    console.error('Clear cart error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 app.post('/login', async (req, res) => {
   try {
@@ -103,7 +135,7 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/logout', (req, res) => {
-  res.clearCookie('token'); // name must match what was set in /login
+  res.clearCookie('token'); 
   res.status(200).json({ message: 'Logged out successfully' });
 });
 
@@ -118,54 +150,7 @@ app.post('/products', upload.single('file'), async (req, res) => {
     console.error('Error creating product:', error);
     res.status(500).json({ message: 'Server Error', error });
   }
-
 })
-
-app.post('/api/cart/:userId', async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const cart = req.body.cart;
-
-    const user = await userModel.findById(userId);
-    if (!user) return res.status(404).json({ message: 'User not found' });
-
-    user.cart = cart;
-    await user.save();
-
-    res.status(200).json({ message: 'Cart saved successfully' });
-  } catch (err) {
-    console.error('Save cart error:', err);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
-app.get('/api/cart/:userId', async (req, res) => {
-  try {
-    const user = await userModel.findById(req.params.userId);
-    if (!user) return res.status(404).json({ message: 'User not found' });
-
-    res.status(200).json({ cart: user.cart || [] });
-  } catch (err) {
-    console.error('Get cart error:', err);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
-app.delete('/api/cart/:userId', async (req, res) => {
-  try {
-    const user = await userModel.findById(req.params.userId);
-    if (!user) return res.status(404).json({ message: 'User not found' });
-
-    user.cart = []; 
-    await user.save();
-
-    res.status(200).json({ message: 'Cart cleared successfully' });
-  } catch (err) {
-    console.error('Clear cart error:', err);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
 
 app.get('/getproducts', async (req, res) => {
   try {
@@ -183,7 +168,7 @@ app.get("/getproduct/:id", async (req, res) => {
 
 app.get('/products/category', async (req, res) => {
   try {
-    const categoryName = req.query.name; // e.g., Male, Female, Couple
+    const categoryName = req.query.name; 
     const products = await productModel.find({ category: categoryName });
     res.status(200).json(products);
   } catch (error) {
@@ -192,21 +177,17 @@ app.get('/products/category', async (req, res) => {
   }
 });
 
-// POST /product/update/:id
 app.post('/product/update/:id', async (req, res) => {
   try {
     const { title, price, description, category } = req.body;
-
     const updated = await productModel.findByIdAndUpdate(
       req.params.id,
       { title, price, description, category },
       { new: true }
     );
-
     if (!updated) {
       return res.status(404).json({ message: 'Product not Updated' });
     }
-
     res.status(200).json({ message: 'Product updated successfully' });
   } catch (error) {
     console.error('Error updating product:', error);
@@ -227,28 +208,26 @@ app.delete('/product/delete/:id', async (req, res) => {
   }
 })
 
+app.get('/related/:category/:productId', async (req, res) => {
+  const { category, productId } = req.params;
+  try {
+    const relatedProducts = await productModel.find({
+      category: category,
+      _id: { $ne: new mongoose.Types.ObjectId(productId) }
+    }).limit(4);
+    res.json(relatedProducts);
+  } catch (err) {
+    console.error("Error in /related route:", err.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find().populate('user', 'name email');
     res.json(orders);
   } catch (err) {
     res.status(500).json({ message: 'Server Error' });
-  }
-});
-
-app.get('/related/:category/:productId', async (req, res) => {
-  const { category, productId } = req.params;
-
-  try {
-    const relatedProducts = await productModel.find({
-      category: category,
-      _id: { $ne: new mongoose.Types.ObjectId(productId) }
-    }).limit(4);
-
-    res.json(relatedProducts);
-  } catch (err) {
-    console.error("Error in /related route:", err.message);
-    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

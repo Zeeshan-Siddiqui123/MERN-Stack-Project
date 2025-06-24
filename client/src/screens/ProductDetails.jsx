@@ -55,7 +55,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="bg-[#1f1f1f] flex flex-col items-center justify-center min-h-screen">
+    <div className="bg-[#1f1f1f] flex flex-col items-center justify-center min-h-screen animate-slide-down">
       {/* Main Product Section */}
       <div className="w-full  p-6 space-y-16 mt-24 mx-auto md:p-10 flex flex-col md:flex-row gap-10">
         {/* Image */}

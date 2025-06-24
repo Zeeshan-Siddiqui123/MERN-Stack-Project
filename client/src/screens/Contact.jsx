@@ -24,7 +24,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white p-6 ">
+    <div className="min-h-screen bg-[#121212] text-white p-6 animate-slide-down">
       <div className="max-w-2xl mx-auto bg-[#1f1f1f] rounded-lg shadow-lg p-8 mt-36">
         <div className='flex  gap-2 justify-center'>
           <div>

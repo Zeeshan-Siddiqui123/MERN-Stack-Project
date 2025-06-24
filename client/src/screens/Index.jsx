@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 const Index = () => {
     return (
-        <div className='bg-[#1c1d22]'>
-            <div className='relative  flex items-center justify-center overflow-hidden'>
+        <div className='bg-[#1c1d22] animate-slide-down'>
+            <div className='relative  flex items-center justify-center overflow-hidden animate-slide-down'>
                 <div className='flex items-center justify-between w-[90%] h-full px-10'>
                     <div className='flex items-center justify-center w-1/3'>
                         {/* <img
@@ -14,7 +14,7 @@ const Index = () => {
                             className='w-[250px] h-[250px] rounded-full object-cover border-4 border-white'
                         /> */}
                     </div>
-                    <div className='relative flex flex-col items-center justify-center w-2/3'>
+                    <div className='relative flex flex-col items-center justify-center w-2/3 '>
                         <div className='relative mr-115 flex items-center mt-30 justify-center gap-10 z-10'>
                             <img
                                 src="/images/hero_watch.webp"
@@ -28,7 +28,7 @@ const Index = () => {
                             />
                         </div>
                         <p className='text-white text-6xl  font-bold text-center mr-115 mt-6 z-10 font-sans'>
-                            Limited Edition Of High Quality Watches
+                            <span className='text-red-500'>Limited Edition</span> Of High Quality Watches
                         </p>
                         <p className='text-yellow-400 font-bold text-2xl typewriter  text-center mr-115 mt-6 z-10 font-sans'>
                             Timeless design, crafted to perfection

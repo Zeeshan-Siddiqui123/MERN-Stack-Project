@@ -24,7 +24,7 @@ const Header = () => {
 
     const uid = localStorage.getItem('userId');
     if (uid) {
-      localStorage.removeItem(`cart_${uid}`); 
+      localStorage.removeItem(`cart_${uid}`);
       localStorage.removeItem('userId');
     }
 
@@ -48,7 +48,8 @@ const Header = () => {
   const totalQuantity = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
   return (
-    <div className='fixed w-full z-50 top-0 flex items-center justify-around h-[100px] bg-[#1c1d22]'>
+    <div className='fixed w-full z-50 top-0 flex items-center justify-around h-[100px] bg-[#1c1d22] animate-slide-down shadow-md'>
+
       {/* Navigation Links */}
       <div className='flex items-center text-sm justify-center gap-7 mr-16'>
         {routes.map(({ path, label }, index) => (
@@ -66,7 +67,7 @@ const Header = () => {
 
       {/* Logo */}
       <div>
-        <img src="/images/logo.png" alt="Logo" className='w-[140px]' />
+        <img src="/images/logo.png" alt="Logo" className='w-[100px]' />
       </div>
 
       {/* Right Side */}
@@ -86,7 +87,7 @@ const Header = () => {
               onClick={handleLogout}
               className="text-sm  px-3 py-1 rounded-md hover:bg-white "
             >
-              <IoIosLogOut color='red' size={30} />
+              <IoIosLogOut className="hover:animate-bounce" color='red' size={30} />
             </button>
           </div>
         ) : (
@@ -101,7 +102,7 @@ const Header = () => {
         <Link to='/cart' className="relative">
           <IoCartOutline onClick={handleProtectedClick} color='orange' size={30} />
           {user && totalQuantity > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full animate-bounce">
               {totalQuantity}
             </span>
           )}
