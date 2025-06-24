@@ -1,36 +1,36 @@
 import React, { useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { IoCartOutline } from "react-icons/io5";
-import { CartContext } from '../screens/CartContext';
-import { routes } from '../../Routes';
 import axios from 'axios';
 import { IoIosLogOut } from "react-icons/io";
 import { message } from 'antd';
+import { CartContext } from '../screens/CartContext'
 import { UserContext } from '../screens/UserContext';
+import { routes } from '../../Routes';
 
 const Header = () => {
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
-  const { user, setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
-const handleLogout = async () => {
-  try {
-    await axios.post('http://localhost:3000/logout', {}, {
-      withCredentials: true,
-    });
-  } catch (err) {
-    console.error('Logout failed:', err);
-  }
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:3000/logout', {}, {
+        withCredentials: true,
+      });
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
 
-  const uid = localStorage.getItem('userId');
-  if (uid) {
-    localStorage.removeItem(`cart_${uid}`); // remove user's cart
-    localStorage.removeItem('userId');
-  }
+    const uid = localStorage.getItem('userId');
+    if (uid) {
+      localStorage.removeItem(`cart_${uid}`); 
+      localStorage.removeItem('userId');
+    }
 
-  setUser(null);
-  navigate('/login');
-};
+    setUser(null);
+    navigate('/login');
+  };
 
 
 
@@ -43,6 +43,7 @@ const handleLogout = async () => {
 
     navigate(`/cart`);
   };
+
 
   const totalQuantity = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
 

@@ -1,99 +1,73 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { CartContext } from './CartContext';
 import axios from 'axios';
 import { MdDelete } from "react-icons/md";
 import { Modal, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const [cart, setCart] = useState([]);
+  const { cart, updateCart, removeFromCart, clearCart } = useContext(CartContext);
   const [total, setTotal] = useState(0);
+  const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // ✅ Load cart for current user
   useEffect(() => {
-    const fetchCart = async () => {
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        message.warning("Please login to view your cart");
-        return navigate('/login');
-      }
-
-      try {
-        const res = await axios.get(`http://localhost:3000/api/cart/${userId}`);
-        setCart(res.data.cart || []);
-      } catch (error) {
-        console.error("Error fetching cart:", error);
-        message.error("Failed to load cart");
-      }
-    };
-
-    fetchCart();
-  }, [navigate]);
+    const id = localStorage.getItem('userId');
+    if (id) {
+      setUserId(id);
+    }
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
-    const subtotal = cart.reduce((acc, product) => {
-      return acc + product.price * (product.quantity || 1);
-    }, 0);
+    if (!loading && !userId) {
+      message.warning("Please login to view cart");
+      navigate('/login');
+    }
+  }, [loading, userId, navigate]);
+
+  useEffect(() => {
+    const subtotal = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
     setTotal(subtotal);
   }, [cart]);
 
   const increase = (index) => {
-    const updatedCart = [...cart];
-    updatedCart[index].quantity = (updatedCart[index].quantity || 1) + 1;
-    setCart(updatedCart);
-    syncCart(updatedCart);
+    const updated = [...cart];
+    updated[index].quantity += 1;
+    updateCart(updated);
   };
 
   const decrease = (index) => {
-    const updatedCart = [...cart];
-    if ((updatedCart[index].quantity || 1) > 1) {
-      updatedCart[index].quantity -= 1;
-      setCart(updatedCart);
-      syncCart(updatedCart);
+    const updated = [...cart];
+    if (updated[index].quantity > 1) {
+      updated[index].quantity -= 1;
+      updateCart(updated);
     }
   };
 
   const deleteItem = (product) => {
     Modal.confirm({
-      title: 'Remove from Cart',
-      content: `Remove ${product.title}?`,
-      okText: 'Remove',
-      cancelText: 'Cancel',
+      title: 'Remove Item',
+      content: `Remove ${product.title} from cart?`,
       onOk() {
-        const updated = cart.filter(p => p.id !== product.id);
-        setCart(updated);
-        syncCart(updated);
+        removeFromCart(product.id);
       }
     });
   };
 
-  const confirmClearCart = () => {
+  const handleClearCart = () => {
     Modal.confirm({
       title: 'Clear Cart',
       content: 'Are you sure you want to remove all items?',
       okType: 'danger',
       onOk: async () => {
-        setCart([]);
-        const userId = localStorage.getItem('userId');
-        if (userId) {
-          await axios.delete(`http://localhost:3000/api/cart/${userId}`);
-        }
+        await clearCart(); // clears from frontend and backend
       }
     });
   };
 
-  const syncCart = async (updatedCart) => {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      try {
-        await axios.post(`http://localhost:3000/api/cart/${userId}`, {
-          cart: updatedCart
-        });
-      } catch (err) {
-        console.error("Cart sync failed:", err);
-      }
-    }
-  };
+  if (loading) return null;
 
   return (
     <div className="w-full mt-22 px-4 py-6 bg-[#121212] text-white shadow-lg">
@@ -123,7 +97,6 @@ const Cart = () => {
                       <p className="text-gray-400">Rs: {product.price}</p>
                     </div>
                   </div>
-
                   <div className="flex items-center gap-4">
                     <button onClick={() => decrease(index)} className="bg-gray-700 px-2 py-1 rounded">−</button>
                     <span>{product.quantity}</span>
@@ -160,7 +133,7 @@ const Cart = () => {
                     Pay
                   </button>
                 </Link>
-                <button onClick={confirmClearCart} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                <button onClick={handleClearCart} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
                   Clear Cart
                 </button>
               </div>

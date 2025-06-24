@@ -5,10 +5,15 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); 
 
   const fetchUser = async () => {
     const userId = localStorage.getItem('userId');
-    if (!userId) return;
+    if (!userId) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await axios.get(`http://localhost:3000/api/profile/${userId}`, {
@@ -17,6 +22,9 @@ export const UserProvider = ({ children }) => {
       setUser(res.data.user);
     } catch (err) {
       console.error('Failed to fetch user profile:', err);
+      setUser(null);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -25,7 +33,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, fetchUser }}>
+    <UserContext.Provider value={{ user, setUser, fetchUser, loading }}>
       {children}
     </UserContext.Provider>
   );
