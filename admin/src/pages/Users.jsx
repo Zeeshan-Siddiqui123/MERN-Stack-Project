@@ -1,50 +1,78 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Table, Spin, message } from 'antd';
 
 const Users = () => {
-    const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/getusers', { withCredentials: true })
-            .then(res => setUsers(res.data))
-            .catch(err => console.error('Error fetching users:', err));
-    }, []);
+  const fetchUsers = async () => {
+    try {
+      const res = await axios.get('http://localhost:3000/getusers', {
+        withCredentials: true
+      });
+      setUsers(res.data || []);
+    } catch (err) {
+      console.error('Error fetching users:', err);
+      message.error('Failed to fetch users');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <div className="p-4">
-            <h2 className="text-2xl font-bold mb-4">Registered Users</h2>
-            <div className="overflow-x-auto">
-                <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                    <thead className="bg-gray-200">
-                        <tr>
-                            <th className="py-3 px-5 text-left">#</th>
-                            <th className="py-3 px-5 text-left">User Id</th>
-                            <th className="py-3 px-5 text-left">Name</th>
-                            <th className="py-3 px-5 text-left">Username</th>
-                            <th className="py-3 px-5 text-left">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.length === 0 ? (
-                            <tr>
-                                <td colSpan="5" className="text-center py-6 text-gray-500">No users found</td>
-                            </tr>
-                        ) : (
-                            users.map((user, index) => (
-                                <tr key={index} className="border-b hover:bg-gray-100">
-                                    <td className="py-3 px-5">{index + 1}</td>
-                                    <td className="py-3 px-5">{user._id}</td>
-                                    <td className="py-3 px-5">{user.name}</td>
-                                    <td className="py-3 px-5">{user.username}</td>
-                                    <td className="py-3 px-5">{user.email}</td>
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
-            </div>
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const columns = [
+    {
+      title: '#',
+      dataIndex: 'index',
+      key: 'index',
+      render: (_, __, index) => index + 1,
+      width: 60,
+    },
+    {
+      title: 'User ID',
+      dataIndex: '_id',
+      key: '_id',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+  ];
+
+  return (
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-6 text-white">Registered Users</h2>
+
+      {loading ? (
+        <div className="flex justify-center items-center h-40">
+          <Spin size="large" />
         </div>
-    );
+      ) : (
+        <Table
+          dataSource={users}
+          columns={columns}
+          rowKey="_id"
+          pagination={{ pageSize: 8 }}
+          bordered
+        />
+      )}
+    </div>
+  );
 };
 
 export default Users;

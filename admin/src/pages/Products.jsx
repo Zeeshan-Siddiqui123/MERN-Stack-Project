@@ -1,14 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Modal, Spin, message, Table, Button, Input, Upload } from 'antd';
 import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Spin } from 'antd';
 
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const fileRef = useRef();
+
   const [data, setData] = useState({
     title: '',
     price: '',
@@ -16,9 +19,6 @@ const Product = () => {
     category: '',
     image: null
   });
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
-  const fileRef = useRef();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -29,13 +29,27 @@ const Product = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const fetchProducts = () => {
+    axios.get('http://localhost:3000/getproducts')
+      .then(res => {
+        setProducts(res.data || []);
+        setLoading(false);
+      })
+      .catch(() => {
+        message.error('Failed to fetch products');
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleSubmit = async () => {
     const { title, price, description, category, image } = data;
 
     if (!title || !price || !description || !category || !image) {
-      setError('All fields are required');
-      setTimeout(() => setError(''), 2000);
+      message.error('All fields are required');
       return;
     }
 
@@ -49,166 +63,155 @@ const Product = () => {
       formData.append('file', image);
 
       const res = await axios.post('http://localhost:3000/products', formData);
-      setMessage(res.data.message);
-
+      message.success(res.data.message || 'Product added successfully');
       setData({ title: '', price: '', description: '', category: '', image: null });
       fileRef.current.value = '';
-      fetchProducts(); // Refresh product list
-      setTimeout(() => setMessage(''), 3000);
+      fetchProducts();
+      setShowModal(false);
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong');
-      setTimeout(() => setError(''), 3000);
+      message.error(err.response?.data?.message || 'Error adding product');
     } finally {
       setSubmitting(false);
     }
   };
 
-  const fetchProducts = () => {
-    axios
-      .get('http://localhost:3000/getproducts', { withCredentials: true })
-      .then((res) => {
-        setProducts(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error fetching products:', err);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-    if (!confirmDelete) return;
-
-    try {
-      await axios.delete(`http://localhost:3000/product/delete/${id}`);
-      setProducts(products.filter((product) => product._id !== id));
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      alert("Failed to delete product");
-    }
+    Modal.confirm({
+      title: 'Are you sure?',
+      content: 'This action cannot be undone.',
+      okText: 'Yes, delete',
+      okType: 'danger',
+      cancelText: 'Cancel',
+      onOk: async () => {
+        try {
+          await axios.delete(`http://localhost:3000/product/delete/${id}`);
+          message.success('Product deleted successfully');
+          setProducts(products.filter(p => p._id !== id));
+        } catch {
+          message.error('Failed to delete product');
+        }
+      }
+    });
   };
+
+  const columns = [
+  {
+    title: 'S. No',
+    key: 'index',
+    render: (_, __, index) => index + 1,
+    width: 80,
+  },
+  {
+    title: 'Image',
+    dataIndex: 'file',
+    key: 'file',
+    render: (file) => (
+      <img
+        src={`http://localhost:3000/images/uploads/${file}`}
+        alt="product"
+        style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4 }}
+      />
+    )
+  },
+  {
+    title: 'Title',
+    dataIndex: 'title',
+    key: 'title'
+  },
+  {
+    title: 'Price (Rs)',
+    dataIndex: 'price',
+    key: 'price'
+  },
+  {
+    title: 'Category',
+    dataIndex: 'category',
+    key: 'category'
+  },
+  {
+    title: 'Actions',
+    key: 'actions',
+    render: (_, product) => (
+      <div className="flex gap-3">
+        <Link to={`/edit/${product._id}`}>
+          <Button icon={<FiEdit />} type="primary" />
+        </Link>
+        <Button
+          icon={<MdDelete />}
+          danger
+          onClick={() => handleDelete(product._id)}
+        />
+      </div>
+    )
+  }
+];
+
 
   if (loading) {
-    return (
-      <div className='text-center mt-20'>
-        <div className='flex items-center justify-center'>
-          <Spin size='large' />
-        </div>
-      </div>
-    );
+    return <div className="text-center mt-20"><Spin size="large" /></div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
-      {/* Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-lg mx-auto mb-10 p-8 bg-white rounded-xl shadow-lg"
-      >
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Add New Product
-        </h2>
+    <div className="p-6">
+      {/* Add New Product Button */}
+      <div className="flex justify-end mb-6 mt-12">
+        <Button type="primary" onClick={() => setShowModal(true)}>
+          + Add New Product
+        </Button>
+      </div>
 
-        <div className="space-y-4">
-          <input
-            type="text"
+      {/* Table */}
+      <Table
+        dataSource={products}
+        columns={columns}
+        rowKey="_id"
+        pagination={{ pageSize: 7 }}
+      />
+
+      {/* Modal Form */}
+      <Modal
+        title="Add New Product"
+        open={showModal}
+        onCancel={() => setShowModal(false)}
+        onOk={handleSubmit}
+        okText="Add"
+        confirmLoading={submitting}
+      >
+        <div className="space-y-3">
+          <Input
+            placeholder="Title"
             name="title"
             value={data.title}
             onChange={handleChange}
-            placeholder="Product Title"
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
           />
-
-          <input
+          <Input
             type="number"
+            placeholder="Price"
             name="price"
             value={data.price}
             onChange={handleChange}
-            placeholder="Rs:"
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
           />
-
-          <textarea
+          <Input.TextArea
+            rows={3}
+            placeholder="Description"
             name="description"
             value={data.description}
             onChange={handleChange}
-            placeholder="Description"
-            className="w-full px-4 py-2 border rounded-md h-24 resize-none focus:ring-2 focus:ring-blue-500 outline-none"
           />
-
-          <input
-            type="text"
+          <Input
+            placeholder="Category"
             name="category"
             value={data.category}
             onChange={handleChange}
-            placeholder="Category"
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
           />
-
           <input
             type="file"
             name="image"
             ref={fileRef}
             onChange={handleChange}
-            className="w-full text-sm text-gray-700"
           />
-
-          <button
-            type="submit"
-            disabled={submitting}
-            className={`w-full ${submitting ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'} text-white py-2 rounded-md font-semibold transition`}
-          >
-            {submitting ? 'Adding...' : 'Add Product'}
-          </button>
-
-          {message && <p className="text-green-600 text-center mt-3">{message}</p>}
-          {error && <p className="text-red-600 text-center mt-3">{error}</p>}
         </div>
-      </form>
-
-      {/* Product Cards */}
-      <h1 className='text-center font-bold mb-4 text-2xl'>Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {products.length === 0 ? (
-          <p className="text-center text-gray-500 col-span-full">No products found</p>
-        ) : (
-          products.map((product) => (
-            <div
-              key={product._id}
-              className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition"
-            >
-              {product.file ? (
-                <img
-                  src={`http://localhost:3000/images/uploads/${product.file}`}
-                  alt={product.title}
-                  onError={(e) => { e.target.src = '/fallback.jpg'; }}
-                  className="w-full bg-black h-48 object-cover rounded-md mb-4"
-                />
-              ) : (
-                <div className="w-full h-48 bg-gray-200 rounded-md flex items-center justify-center text-gray-500">
-                  No Image
-                </div>
-              )}
-              <h3 className="text-xl font-bold mb-1">{product.title}</h3>
-              <p className="text-blue-600 font-semibold">Rs: {product.price}</p>
-              {/* <p className="text-black font-semibold">{product.category}</p> */}
-              <div className="btn flex justify-between mt-2">
-                <Link to={`/edit/${product._id}`}>
-                  <button><FiEdit size={20} color="orange" /></button>
-                </Link>
-                <button onClick={() => handleDelete(product._id)}>
-                  <MdDelete size={25} color="red" />
-                </button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+      </Modal>
     </div>
   );
 };

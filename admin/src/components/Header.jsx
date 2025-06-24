@@ -6,8 +6,8 @@ const Header = () => {
     location.reload();
   };
   return (
-    <div className="flex justify-between items-center p-4 shadow-md bg-white">
-      <h2 className="text-lg font-bold">Welcome, Admin</h2>
+    <div className="w-full fixed  top-0 flex justify-between items-center p-4 shadow-md bg-white">
+      <h2 className="text-lg font-bold ml-60">Welcome, Admin</h2>
       <button className="btn" onClick={logout}>Logout</button>
     </div>
   );
