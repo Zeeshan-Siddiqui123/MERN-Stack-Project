@@ -47,9 +47,9 @@ const Index = () => {
                             />
                         </div>
 
-                        <p className='text-white text-3xl lg:text-4xl font-bold text-center mt-6 font-sans'>
+                        <h1 className='text-white lg:text-7xl xl:text-4xl font-bold text-center mt-6 font-sans'>
                             <span className='text-red-500'>Limited Edition</span> Of High Quality Watches
-                        </p>
+                        </h1>
                         <div className=''>
                             <p className='text-yellow-400 font-bold text-sm lg:text-2xl  text-center mt-4 font-sans typewriter'>
                                 Timeless design,  crafted to perfection
@@ -89,7 +89,7 @@ const Index = () => {
 
             {/* Offer Section */}
             <div className='flex flex-col  lg:flex-row items-center justify-center gap-6 mt-12 px-4'>
-                <img src="/images/ss.png" alt="" className='w-full sm:w-[350px] md:w-[400px] object-contain' />
+                <img src="/images/ss.png" alt="" className='w-full lg:w-[700px] md:w-[400px] object-contain' />
                 <div className='flex flex-col items-center justify-center gap-6 text-white text-center lg:text-left'>
                     <div>
                         <p className='font-bold text-3xl sm:text-4xl'>Today’s Offer</p>
