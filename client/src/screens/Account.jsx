@@ -68,7 +68,7 @@ const Signup = () => {
 };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black text-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black text-white px-4 animate-slide-down">
       <form
         onSubmit={handleSignup}
         className="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-xl border border-gray-700"

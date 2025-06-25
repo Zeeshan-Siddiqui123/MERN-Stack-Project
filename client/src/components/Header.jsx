@@ -62,7 +62,7 @@ const Header = () => {
         </nav>
 
         <Link to="/">
-          <img src="/images/logo.png" alt="Logo" className="w-[100px]" />
+          <img src="/images/logo.png" alt="Logo" className="w-[90px]" />
         </Link>
 
         {/* User & Cart */}

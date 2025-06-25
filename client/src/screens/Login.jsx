@@ -53,7 +53,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-900 via-black to-gray-900 px-4 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-900 via-black to-gray-900 px-4 text-white animate-slide-down">
       <form
         onSubmit={handleLogin}
         className="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-2xl border border-gray-700"

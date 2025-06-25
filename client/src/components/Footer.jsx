@@ -8,7 +8,7 @@ const Footer = () => {
         
         {/* Brand */}
         <div>
-          <img src="../public/images/logo.png" alt="" className='w-[150px]'/>
+          <img src="../public/images/logo.png" alt="" className='w-[150px] -ml-6'/>
           <p className="text-sm text-gray-400">
             Your one-stop shop for premium timepieces. Discover the perfect watch that suits your style.
           </p>
