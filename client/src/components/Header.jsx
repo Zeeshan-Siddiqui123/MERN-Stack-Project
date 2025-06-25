@@ -1,114 +1,111 @@
 import React, { useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { IoCartOutline } from "react-icons/io5";
-import axios from 'axios';
-import { IoIosLogOut } from "react-icons/io";
+import { IoCartOutline } from 'react-icons/io5';
+import { IoIosLogOut } from 'react-icons/io';
 import { message } from 'antd';
-import { CartContext } from '../screens/CartContext'
+import { useSelector } from 'react-redux';
 import { UserContext } from '../screens/UserContext';
 import { routes } from '../../Routes';
+import axios from 'axios';
+import MobileMenu from './MobileMenu';
+
 
 const Header = () => {
-  const { cart } = useContext(CartContext);
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
+  const cart = useSelector((state) => state.cart.items);
+
+  const totalQuantity = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:3000/logout', {}, {
-        withCredentials: true,
-      });
+      await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
     } catch (err) {
       console.error('Logout failed:', err);
     }
 
-    const uid = localStorage.getItem('userId');
-    if (uid) {
-      localStorage.removeItem(`cart_${uid}`);
-      localStorage.removeItem('userId');
-    }
-
+    localStorage.removeItem('userId');
     setUser(null);
     navigate('/login');
   };
-
-
 
   const handleProtectedClick = () => {
     if (!user) {
       message.warning("Please login to view cart");
       navigate('/login');
-      return;
+    } else {
+      navigate('/cart');
     }
-
-    navigate(`/cart`);
   };
 
-
-  const totalQuantity = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
-
   return (
-    <div className='fixed w-full z-50 top-0 flex items-center justify-around h-[100px] bg-[#1c1d22] animate-slide-down shadow-md'>
+    <header className="fixed top-0 w-full z-50 bg-[#1c1d22] shadow-md">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-[100px]">
+        {/* Logo */}
+        <div className='toggle max-sm:mr-2'><MobileMenu/></div>
 
-      {/* Navigation Links */}
-      <div className='flex items-center text-sm justify-center gap-7 mr-16'>
-        {routes.map(({ path, label }, index) => (
-          <NavLink
-            key={index}
-            to={path}
-            className={({ isActive }) =>
-              isActive ? 'text-[#795b50] nav-link' : 'text-white nav-link'
-            }
-          >
-            {label}
-          </NavLink>
-        ))}
-      </div>
+        {/* Navigation Links */}
+        <nav className="nav-linkk md:flex gap-6 items-center">
+          {routes.map(({ path, label }) => (
+            <NavLink
+              key={path}
+              to={path}
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-[#f49521] font-semibold'
+                  : 'text-white hover:text-[#f49521] transition'
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
 
-      {/* Logo */}
-      <div>
-        <img src="/images/logo.png" alt="Logo" className='w-[100px]' />
-      </div>
+        <Link to="/">
+          <img src="/images/logo.png" alt="Logo" className="w-[100px]" />
+        </Link>
 
-      {/* Right Side */}
-      <div className='flex gap-4 items-center relative'>
-        {user ? (
-          <div className='flex items-center gap-2'>
-            <div className='flex flex-col text-white items-center'>
+        {/* User & Cart */}
+        <div className="flex items-center gap-5">
+          {/* Cart Icon */}
+          <div className="relative cursor-pointer" onClick={handleProtectedClick}>
+            <IoCartOutline size={28} className="text-orange-500" />
+            {user && totalQuantity > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-xs text-white font-semibold px-1.5 py-0.5 rounded-full">
+                {totalQuantity}
+              </span>
+            )}
+          </div>
+          
+          
+
+          {/* Auth */}
+          {user ? (
+            <div className="flex items-center gap-3 text-white">
               <img
                 src={user.image || '/images/default.png'}
-                alt="Profile"
-                className="w-10 h-10 rounded-full border border-white object-cover"
+                alt="User"
+                className="w-10 h-10 rounded-full object-cover border"
               />
-              <p>Hello, <span className='font-bold'>{user.name}</span></p>
+              <div className="text-sm text-white">
+                Hello, <span className="font-semibold">{user.name}</span>
+              </div>
+              <IoIosLogOut
+                size={26}
+                className="cursor-pointer text-red-500 hover:text-red-600"
+                onClick={handleLogout}
+              />
             </div>
-
-            <button
-              onClick={handleLogout}
-              className="text-sm  px-3 py-1 rounded-md hover:bg-white "
-            >
-              <IoIosLogOut className="hover:animate-bounce" color='red' size={30} />
-            </button>
-          </div>
-        ) : (
-          <NavLink to="/signup">
-            <button className='bg-white p-2 w-25 rounded-lg hover:bg-black hover:text-white border border-white transition duration-300'>
-              Sign Up
-            </button>
-          </NavLink>
-        )}
-
-        {/* Cart Icon */}
-        <Link to='/cart' className="relative">
-          <IoCartOutline onClick={handleProtectedClick} color='orange' size={30} />
-          {user && totalQuantity > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full animate-bounce">
-              {totalQuantity}
-            </span>
+          ) : (
+            <Link to="/signup">
+              <button className="bg-white px-4 py-1.5 rounded hover:bg-[#f49521] hover:text-white text-black font-medium border border-white transition">
+                Sign Up
+              </button>
+            </Link>
           )}
-        </Link>
+        </div>
       </div>
-    </div>
+    </header>
   );
 };
 

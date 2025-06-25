@@ -9,15 +9,17 @@ import Women from './screens/Women';
 import Couple from './screens/Couple';
 import Product from './screens/Product';
 import Cart from './screens/Cart';
-import Payment from './Payment';
 import Login from './screens/Login';
 import Account from './screens/Account';
 import PrivateRoute from './screens/PrivateRoute';
+import PaymentPage from './screens/Payment';
+
 
 const App = () => {
     return (
         <div className="min-h-screen flex flex-col">
             <BrowserRouter>
+                
                 <Header />
 
                 {/* Main Content Area */}
@@ -34,7 +36,7 @@ const App = () => {
                         <Route path='/signup' element={<Account />} />
                         <Route path='/login' element={<Login />} />
                         <Route path='/product-details/:id' element={<PrivateRoute><ProductDetails /></PrivateRoute>} />
-                        <Route path='/payment' element={<Payment />} />
+                        <Route path='/payment' element={<PaymentPage />} />
                         <Route path="/cart" element={
                             <PrivateRoute>
                                 <Cart />

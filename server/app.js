@@ -39,10 +39,10 @@ app.post('/register', upload.single('file'), async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     const user = await userModel.create({
-      username,
-      name,
-      email,
-      file: req.file?.filename || '',
+      username, 
+      name, 
+      email, 
+      file: req.file?.filename || '', 
       password: hash
     });
     console.log(user.json);
@@ -79,6 +79,7 @@ app.post('/api/cart/:userId', async (req, res) => {
     const cart = req.body.cart;
     const user = await userModel.findById(userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
+
     user.cart = cart;
     await user.save();
     res.status(200).json({ message: 'Cart saved successfully' });
@@ -88,10 +89,12 @@ app.post('/api/cart/:userId', async (req, res) => {
   }
 });
 
+
 app.get('/api/cart/:userId', async (req, res) => {
   try {
     const user = await userModel.findById(req.params.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
+
     res.status(200).json({ cart: user.cart || [] });
   } catch (err) {
     console.error('Get cart error:', err);

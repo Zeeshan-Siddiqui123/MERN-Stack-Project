@@ -1,29 +1,26 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { CartContext } from './screens/CartContext';
 import { Button, Modal, Spin } from 'antd';
 import {
-  FaShoppingBag,
-  FaUser,
-  FaMapMarkerAlt,
-  FaCity,
-  FaPhoneAlt,
-  FaEnvelope,
-  FaCreditCard
+  FaShoppingBag, FaUser, FaMapMarkerAlt, FaCity,
+  FaPhoneAlt, FaEnvelope, FaCreditCard
 } from 'react-icons/fa';
 
 const PaymentPage = () => {
   const location = useLocation();
   const orderedProduct = location.state?.product || null;
-  const { cart } = useContext(CartContext);
-  const [mobile, setMobile] = useState('');
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  const cart = useSelector(state => state.cart.items); // ✅ get cart from Redux
+
   const [products, setProducts] = useState([]);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (orderedProduct) {
@@ -48,7 +45,6 @@ const PaymentPage = () => {
         city,
         cartItems: products,
       });
-
       window.location.href = res.data.paymentURL;
     } catch (err) {
       Modal.error({
@@ -74,7 +70,7 @@ const PaymentPage = () => {
             </h3>
             <div className="space-y-4">
               {products.map((item, index) => (
-                <div key={index} className="flex items-center justify-between bg-[#2a2a2a] rounded-md p-3">
+                <div key={`${item.id}-${index}`} className="flex items-center justify-between bg-[#2a2a2a] rounded-md p-3">
                   <div className="flex items-center gap-4">
                     <img
                       src={`http://localhost:3000/images/uploads/${item.file}`}
