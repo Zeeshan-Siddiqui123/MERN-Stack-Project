@@ -2,6 +2,24 @@ import React from 'react';
 import { IoArrowForward } from "react-icons/io5";
 import { Link } from 'react-router-dom'
 
+const categoryData = [
+  {
+    title: "Couple's Best Seller",
+    image: "/images/couples.webp",
+    path: "/products/couple"
+  },
+  {
+    title: "Men's Best Seller",
+    image: "/images/men.webp",
+    path: "/products/men"
+  },
+  {
+    title: "Women's Best Seller",
+    image: "/images/women.webp",
+    path: "/products/women"
+  },
+];
+
 const Index = () => {
     return (
         <div className='bg-[#1c1d22] animate-slide-down'>
@@ -19,12 +37,12 @@ const Index = () => {
                             <img
                                 src="/images/hero_watch.webp"
                                 alt="Watch 1"
-                                className='w-[300px] transform rotate-[-20deg] '
+                                className='w-[200px] transform rotate-[-20deg] lg:w-[300px]'
                             />
                             <img
                                 src="/images/hero_watch.webp"
                                 alt="Watch 2"
-                                className='w-[300px] transform rotate-[15deg] '
+                                className='w-[200px] transform rotate-[20deg] lg:w-[300px]'
                             />
                         </div>
                         <p className='text-white text-6xl  font-bold text-center mr-115 mt-6 z-10 font-sans'>
@@ -42,60 +60,30 @@ const Index = () => {
                     style={{ animation: 'spin 20s linear infinite' }}
                 />
             </div>
-            <div className='flex items-center justify-center flex-wrap mt-10'>
-                <div className="relative w-fit">
-                    <img src="/images/couples.webp" alt="" className='w-[500px] h-[326.95px]' />
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
-                        <div className='flex flex-col ml-2'>
-                            <p className='text-black font-sans'>Couple's Best Seller</p>
-                            <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
-                        </div>
-                        <Link to='/products/couple'>
-                            <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
-                                <IoArrowForward
-                                    size={50}
-                                    className='text-black group-hover:text-white transition duration-300'
-                                />
+            <div className='flex flex-wrap justify-center items-center gap-6 mt-8'>
+                {categoryData.map(({ image, title, path }, i) => (
+                    <div key={i} className="relative w-full sm:w-[300px] md:w-[400px]">
+                        <img src={image} alt={title} className='w-full h-[280px] object-cover rounded' />
+                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[85%] h-[80px] rounded-md shadow-md flex justify-between items-center px-4">
+                            <div className='flex flex-col'>
+                                <p className='text-black font-sans'>{title}</p>
+                                <p className='text-black font-bold text-xl font-sans'>Shop Now</p>
                             </div>
-                        </Link>
-                    </div>
-                </div>
-                <div className="relative w-fit">
-                    <img src="/images/men.webp" alt="" className='w-[500px]' />
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
-                        <div className='flex flex-col ml-2'>
-                            <p className='text-black font-sans'>Men's Best Seller</p>
-                            <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
+                            <Link to={path}>
+                                <div className='group border-l border-black pl-4 h-full flex justify-center items-center hover:bg-black transition duration-300 cursor-pointer'>
+                                    <IoArrowForward
+                                        size={30}
+                                        className='text-black group-hover:text-white transition duration-300'
+                                    />
+                                </div>
+                            </Link>
                         </div>
-                        <Link to='/products/men'>
-                            <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
-                                <IoArrowForward
-                                    size={50}
-                                    className='text-black group-hover:text-white transition duration-300'
-                                />
-                            </div>
-                        </Link>
                     </div>
-                </div>
-                <div className="relative w-fit">
-                    <img src="/images/women.webp" alt="" className="w-[500px]" />
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white w-[400px] h-[80px] rounded-md shadow-md flex justify-between items-center ">
-                        <div className='flex flex-col ml-2'>
-                            <p className='text-black font-sans'>Women's Best Seller</p>
-                            <p className='text-blacl font-bold text-xl font-sans'>Shop Now</p>
-                        </div>
-                        <Link to='/products/women'>
-                            <div className='group border-l border-l-black w-[80px] h-[80px] flex justify-center items-center hover:bg-black cursor-pointer transition duration-300'>
-                                <IoArrowForward
-                                    size={50}
-                                    className='text-black group-hover:text-white transition duration-300'
-                                />
-                            </div>
-                        </Link>
-                    </div>
-                </div>
+                ))}
             </div>
-            <div className='flex mt-2 gap-3'>
+
+            
+            <div className='flex flex-wrap mt-2 gap-3'>
                 <img src="/images/ss.png" alt="" />
                 <div className='flex flex-col items-start gap-10 justify-center'>
                     <div>

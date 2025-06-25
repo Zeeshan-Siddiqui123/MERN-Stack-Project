@@ -96,14 +96,16 @@ const About = () => {
 
       {/* Contact & Details Section */}
       <div className="mt-20 border-t border-gray-700 pt-12">
-        <h2 className="text-3xl font-bold text-center text-[#f49521] mb-8">
+        <h2 className="text-3xl font-bold  text-[#f49521] mb-8 lg:text-center">
           Contact & Company Info
         </h2>
 
-        <div className="flex flex-row items-center justify-around flex-wrap gap-10 text-gray-300">
+        <div className="flex flex-wrap items-center justify-start gap-8 text-gray-300 lg:justify-center">
+
+
           {/* Contact Info */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
               <FaMapMarkerAlt className="text-[#f49521]" />
               <span>Gulshan-e-Iqbal, Karachi, Pakistan</span>
             </div>

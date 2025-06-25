@@ -29,21 +29,21 @@ const Men = () => {
     <div className="p-4 sm:p-6  ">
       <h2 className="text-3xl text-white text-center font-bold mb-8">Men Watches</h2>
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap justify-center">
         {products.length === 0 ? (
           <p className="text-white text-center">No men products found.</p>
         ) : (
           products.map(product => (
             <div
               key={product._id}
-              className="w-1/2 sm:w-[150px] lg:w-1/4 md:w-1/3  p-2"
+              className="w-1/2 md:w-1/3 lg:w-1/4 p-2"
             >
               <div className="bg-black rounded-lg shadow-md p-3 h-full flex flex-col">
                 <div className="flex justify-center items-center mb-3">
                   <img
                     src={`http://localhost:3000/images/uploads/${product.file}`}
                     alt={product.title}
-                    className="w-full h-48 object-cover rounded"
+                    className="w-full md:w-1/3 lg:w-1/4 p-2 h-48 object-cover rounded"
                   />
                 </div>
                 <div className="flex flex-col gap-2 flex-grow">
@@ -61,6 +61,7 @@ const Men = () => {
           ))
         )}
       </div>
+
     </div>
   );
 };
