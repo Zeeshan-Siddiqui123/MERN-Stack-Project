@@ -5,8 +5,8 @@ import './index.css'
 import App from './App.jsx'
 import '@ant-design/v5-patch-for-react-19';
 import { UserProvider } from './screens/UserContext.jsx'
-import { Provider } from 'react-redux'
 import { store } from './app/store.js'
+import { Provider } from 'react-redux'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
