@@ -55,7 +55,7 @@ const Users = () => {
   ];
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-[#121212] p-6 mt-16 ml-60">
       <h2 className="text-2xl font-bold mb-6 text-white">Registered Users</h2>
 
       {loading ? (

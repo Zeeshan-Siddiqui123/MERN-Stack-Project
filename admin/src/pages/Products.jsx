@@ -152,9 +152,11 @@ const Product = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className=" min-h-screen bg-[#121212] p-6 mt-16 ml-60">
+      <h1 className='text-white text-center'>Products</h1>
       {/* Add New Product Button */}
       <div className="flex justify-end mb-6 mt-12">
+        
         <Button type="primary" onClick={() => setShowModal(true)}>
           + Add New Product
         </Button>

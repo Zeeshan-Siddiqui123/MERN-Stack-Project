@@ -42,7 +42,7 @@ const Header = () => {
     <header className="fixed top-0 w-full z-50 bg-[#1c1d22] shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-[100px]">
         {/* Logo */}
-        <div className='toggle max-sm:mr-2'><MobileMenu/></div>
+        <div className='toggle max-sm:mr-2'><MobileMenu /></div>
 
         {/* Navigation Links */}
         <nav className="nav-linkk md:flex gap-6 items-center">
@@ -62,22 +62,31 @@ const Header = () => {
         </nav>
 
         <Link to="/">
-          <img src="/images/logo.png" alt="Logo" className="w-[90px]" />
+          <img src="/images/logo.png" alt="Logo" className="w-[90px]" style={{
+            animation: 'badgeBounce 2s ease-in-out '
+          }} />
         </Link>
 
         {/* User & Cart */}
         <div className="flex items-center gap-5">
           {/* Cart Icon */}
           <div className="relative cursor-pointer" onClick={handleProtectedClick}>
-            <IoCartOutline size={28} className="text-orange-500" />
+            <IoCartOutline size={28} className="text-orange-500" style={{
+              animation: 'cartWiggle 2s ease-in-out infinite'
+            }} />
             {user && totalQuantity > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-600 text-xs text-white font-semibold px-1.5 py-0.5 rounded-full">
+              <span
+                className="absolute -top-2 -right-2 bg-red-600 text-xs text-white font-semibold px-1.5 py-0.5 rounded-full"
+                style={{
+                  animation: 'badgeBounce 2s ease-in-out infinite'
+                }}
+              >
                 {totalQuantity}
               </span>
             )}
           </div>
-          
-          
+
+
 
           {/* Auth */}
           {user ? (
@@ -87,8 +96,8 @@ const Header = () => {
                 alt="User"
                 className="w-10 h-10 rounded-full object-cover border"
               />
-              <div className="text-sm text-white">
-                Hello, <span className="font-semibold">{user.name}</span>
+              <div className="text-sm text-white typewriter">
+                Hello, <span className="font-semibold ">{user.name}</span>
               </div>
               <IoIosLogOut
                 size={26}

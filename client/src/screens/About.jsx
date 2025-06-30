@@ -13,6 +13,7 @@ import {
   FaFacebook,
   FaInstagram,
   FaTwitter,
+  FaWhatsapp,
 } from 'react-icons/fa';
 
 const About = () => {
@@ -35,6 +36,9 @@ const About = () => {
             src="/images/logo.png"
             alt="Auric Watch"
             className="w-full max-w-md object-cover"
+            style={{
+              animation: 'badgeBounce 2s ease-in-out '
+            }}
           />
         </div>
 
@@ -107,15 +111,15 @@ const About = () => {
           <div className="space-y-4">
             <div className="flex items-start gap-3">
               <FaMapMarkerAlt className="text-[#f49521]" />
-              <span>Gulshan-e-Iqbal, Karachi, Pakistan</span>
+              <span>Karachi, Pakistan</span>
             </div>
             <div className="flex items-center gap-3">
               <FaPhoneAlt className="text-[#f49521]" />
-              <span>+92 312 1234567</span>
+              <span>+92 3220257882</span>
             </div>
             <div className="flex items-center gap-3">
               <FaEnvelope className="text-[#f49521]" />
-              <span>support@auricwatch.pk</span>
+              <span>aurictime0@gmail.com</span>
             </div>
           </div>
 
@@ -127,11 +131,11 @@ const About = () => {
             </div>
             <div className="flex items-center gap-3">
               <FaInstagram className="text-[#f49521]" />
-              <span>@auric.watch</span>
+              <span>auric_time_</span>
             </div>
             <div className="flex items-center gap-3">
-              <FaTwitter className="text-[#f49521]" />
-              <span>@auric_watch</span>
+              <FaWhatsapp className="text-[#f49521]" />
+              <span>Auric Time</span>
             </div>
           </div>
         </div>

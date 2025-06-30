@@ -113,7 +113,7 @@ const ProductDetails = () => {
       </div>
 
       {/* Related Products */}
-      <div className='w-full mx-auto md:p-10 flex flex-col md:flex-row gap-10'>
+      {/* <div className='w-full mx-auto md:p-10 flex flex-col md:flex-row gap-10'>
         {related.length > 0 && (
           <div className="text-white flex-1">
             <h2 className="text-3xl font-bold mb-6 text-white text-center">Related Products</h2>
@@ -140,6 +140,39 @@ const ProductDetails = () => {
               ))}
             </div>
           </div>
+        )}
+      </div> */}
+      <h2 className="text-3xl font-bold mb-6 text-white text-center">Related Products</h2>
+      <div className="flex flex-wrap justify-center">
+        
+        {related.length === 0 ? (
+          <p className="text-white text-center">No men products found.</p>
+        ) : (
+          related.map(item => (
+            <div
+              key={item._id}
+              className="w-1/2 md:w-1/3 lg:w-1/4 p-2"
+            >
+              <div className="bg-black rounded-lg shadow-md p-3 h-full flex flex-col">
+                <div className="flex justify-center items-center mb-3">
+                  <img
+                    src={`http://localhost:3000/images/uploads/${item.file}`}
+                    alt={item.title}
+                    className="w-full md:w-1/1 p-2 h-28 lg:h-48 md:h-48 object-cover rounded"
+                  />
+                </div>
+                <div className="flex flex-col gap-2 flex-grow">
+                  <h3 className="font-semibold text-white text-base truncate">{item.title}</h3>
+                  <p className="text-[#f49521] font-medium text-sm">Rs: {item.price}</p>
+                  <Link to={`/product-details/${item._id}`}>
+                      <button className='mt-auto w-full bg-white text-black text-sm py-2 rounded hover:bg-black hover:text-white border border-white transition'>
+                        Order Now
+                      </button>
+                    </Link>
+                </div>
+              </div>
+            </div>
+          ))
         )}
       </div>
     </div>

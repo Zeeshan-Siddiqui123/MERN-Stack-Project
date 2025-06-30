@@ -43,7 +43,7 @@ const Men = () => {
                   <img
                     src={`http://localhost:3000/images/uploads/${product.file}`}
                     alt={product.title}
-                    className="w-full md:w-1/3 lg:w-1/4 p-2 h-48 object-cover rounded"
+                    className="w-full md:w-1/1  p-2 h-28 lg:h-48 md:h-48 object-cover rounded"
                   />
                 </div>
                 <div className="flex flex-col gap-2 flex-grow">

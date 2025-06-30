@@ -28,34 +28,42 @@ const Couple = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4 text-center text-white">Couple Watches</h2>
-      <div className="flex flex-wrap items-center justify-center gap-15">
+  <div className="p-4 sm:p-6  ">
+      <h2 className="text-3xl text-white text-center font-bold mb-8">Couple Watches</h2>
+
+      <div className="flex flex-wrap justify-center">
         {products.length === 0 ? (
-          <p>No couple products found.</p>
+          <p className="text-white text-center">No couple products found.</p>
         ) : (
           products.map(product => (
-            <div key={product._id} className='w-[400px] bg-black p-3'>
-              <div className=" shadow-md p-4 w
-               w-[400px] flex items-center justify-center">
-                <img
-                  src={`http://localhost:3000/images/uploads/${product.file}`}
-                  alt={product.title}
-                  className="w-full h-48 object-cover rounded"
-                />
-
+            <div
+              key={product._id}
+              className="w-1/2 md:w-1/3 lg:w-1/4 p-2"
+            >
+              <div className="bg-black rounded-lg shadow-md p-3 h-full flex flex-col">
+                <div className="flex justify-center items-center mb-3">
+                  <img
+                    src={`http://localhost:3000/images/uploads/${product.file}`}
+                    alt={product.title}
+                    className="w-full md:w-1/1  p-2 h-28 lg:h-48 md:h-48 object-cover rounded"
+                  />
+                </div>
+                <div className="flex flex-col gap-2 flex-grow">
+                  <h3 className="font-semibold text-white text-base truncate">{product.title}</h3>
+                  <p className="text-[#f49521] font-medium text-sm">Rs: {product.price}</p>
+                  <button
+                    onClick={() => handleProtectedClick(product._id)}
+                    className="mt-auto bg-white text-black text-sm py-2 rounded hover:bg-black hover:text-white border border-white transition"
+                  >
+                    Order Now
+                  </button>
+                </div>
               </div>
-              <div className='flex flex-col gap-2'>
-                <h3 className="mt-2 font-semibold text-lg text-white">{product.title}</h3>
-                <p className="text-white font-medium ">Rs: {product.price}</p>
-                <Link to={`/product-details/${product._id}`}>
-                  <button onClick={() => handleProtectedClick(product._id)} className='bg-white w-full  text-black px-12 py-3 hover:bg-black hover:text-white border border-white cursor-pointer transition duration-300 '>Order Now</button></Link>
-              </div>
-
             </div>
           ))
         )}
       </div>
+
     </div>
   );
 };

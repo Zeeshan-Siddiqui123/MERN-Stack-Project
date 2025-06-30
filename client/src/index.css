@@ -2,53 +2,59 @@
 
 
 body {
-    background:#1c1d22;
-    font-family: "Varela Round", sans-serif;
-    font-weight: 100;
-    font-style:normal;
+  background: #1c1d22;
+  font-family: "Varela Round", sans-serif;
+  font-weight: 100;
+  font-style: normal;
 }
 
-.toggle{
+.toggle {
   display: none;
 }
-@media  screen and (max-width: 600px) {
-  .toggle{
+
+@media screen and (max-width: 600px) {
+  .toggle {
     display: block;
   }
-  .nav-linkk{
+
+  .nav-linkk {
     display: none;
   }
 }
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 .typewriter {
-    overflow: hidden;
-    white-space: nowrap;
-    letter-spacing: 0.1em;
-    animation: typing 3s steps(35, end), blink-caret 0.75s step-end infinite;
-  }
-  
-  @keyframes typing {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
+  overflow: hidden;
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+  animation: typing 3s steps(35, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
   }
 
-  @keyframes slideDown {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes slideDown {
   0% {
     opacity: 0;
     transform: translateY(-40px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -60,4 +66,26 @@ body {
 }
 
 
-  
+@keyframes cartWiggle {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes badgeBounce {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
