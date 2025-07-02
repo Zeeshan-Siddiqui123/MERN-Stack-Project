@@ -3,15 +3,15 @@ const mongoose = require("mongoose")
 mongoose.connect('mongodb://127.0.0.1:27017/ecommerce')
 
 const userSchema = mongoose.Schema({
-    username: String,
-    name: String,
-    email: String,
-    password: String,
-    file: {
-        type: String,
-        default: 'default.png'
-    },
-    cart: [
+  username: String,
+  name: String,
+  email: String,
+  password: String,
+  file: {
+    type: String,
+    default: 'default.png'
+  },
+  cart: [
     {
       id: String,
       title: String,
@@ -19,7 +19,14 @@ const userSchema = mongoose.Schema({
       quantity: Number,
       file: String,
     }
-  ]
+  ],
+  otp: String,
+  otpExpires: Date,
+  isVerified: {
+    type: Boolean,
+    default: false
+  }
+
 })
 
 module.exports = mongoose.model('user', userSchema)

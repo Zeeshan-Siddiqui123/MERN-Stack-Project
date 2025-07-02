@@ -13,6 +13,7 @@ import Login from './screens/Login';
 import Account from './screens/Account';
 import PrivateRoute from './screens/PrivateRoute';
 import PaymentPage from './screens/Payment';
+import Verify from './screens/Verify';
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
                             <Route path='/products/couple' element={<Couple />} />
                         </Route>
                         <Route path='/signup' element={<Account />} />
+                        <Route path='/verify' element={<Verify />} />
                         <Route path='/login' element={<Login />} />
                         <Route path='/product-details/:id' element={<PrivateRoute><ProductDetails /></PrivateRoute>} />
                         <Route path='/payment' element={<PaymentPage />} />

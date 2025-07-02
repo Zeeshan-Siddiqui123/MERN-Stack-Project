@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { API } from '../../API';
 
-const Signup = () => {
+const Account = () => {
   const [data, setData] = useState({
     name: '',
     username: '',
@@ -59,7 +59,7 @@ const Signup = () => {
 
     setTimeout(() => {
       setMessage('');
-      navigate('/login');
+      navigate('/verify');
     }, 2000);
   } catch (err) {
     setError(err.response?.data?.message || 'Signup failed');
@@ -140,4 +140,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Account;

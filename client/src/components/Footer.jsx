@@ -33,7 +33,7 @@ const Footer = () => {
           <div className="flex space-x-4">
             <a href="#" className="hover:text-blue-500"><FaFacebookF /></a>
             <a href="https://www.instagram.com/auric_time_/?igsh=bXozdmQ5ZjdseHAz#" target='_blank' className="hover:text-pink-500"><FaInstagram /></a>
-            <a href="https://chat.whatsapp.com/DUhMmApPVxOLebrwpdX2fg"n target='_blank' className="hover:text-sky-400"><FaWhatsapp /></a>
+            <a href="https://chat.whatsapp.com/DUhMmApPVxOLebrwpdX2fg" target='_blank' className="hover:text-sky-400"><FaWhatsapp /></a>
             {/* <a href="#" className="hover:text-red-600"><FaYoutube /></a> */}
           </div>
         </div>
