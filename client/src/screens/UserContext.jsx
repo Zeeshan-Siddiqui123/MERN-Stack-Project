@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API } from '../../API';
 
 export const UserContext = createContext();
 
@@ -16,7 +17,7 @@ export const UserProvider = ({ children }) => {
     }
 
     try {
-      const res = await axios.get(`http://localhost:3000/api/profile/${userId}`, {
+      const res = await axios.get(`${API}/api/profile/${userId}`, {
         withCredentials: true,
       });
       setUser(res.data.user);

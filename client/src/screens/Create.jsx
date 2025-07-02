@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { API } from '../../API';
 
 const Create = () => {
     const [data, setData] = useState({
@@ -43,7 +44,7 @@ const Create = () => {
             formData.append("password", password);
             formData.append("file", file);
 
-            const res = await axios.post("http://localhost:3000/register", formData);
+            const res = await axios.post(`${API}/register`, formData);
             setMessage(res.data.message);
             setError("");
 

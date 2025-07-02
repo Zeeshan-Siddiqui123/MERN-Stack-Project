@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
 import { message } from 'antd';
 import { Link } from 'react-router-dom';
+import { API } from '../../API';
 
 const Women = () => {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ const Women = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:3000/products/category?name=Women')
+    axios.get(`${API}/products/category?name=Women`)
       .then(res => setProducts(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -42,7 +43,7 @@ const Women = () => {
               <div className="bg-black rounded-lg shadow-md p-3 h-full flex flex-col">
                 <div className="flex justify-center items-center mb-3">
                   <img
-                    src={`http://localhost:3000/images/uploads/${product.file}`}
+                    src={`${API}/images/uploads/${product.file}`}
                     alt={product.title}
                     className="w-full md:w-1/1  p-2 h-28 lg:h-48 md:h-48 object-cover rounded"
                   />

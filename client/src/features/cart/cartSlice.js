@@ -1,23 +1,24 @@
 // features/cart/cartSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API } from '../../../API';
 
 export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
   const userId = localStorage.getItem('userId');
-  const res = await axios.get(`http://localhost:3000/api/cart/${userId}`);
+  const res = await axios.get(`${API}/api/cart/${userId}`);
   return res.data.cart || [];
 });
 
 export const saveCart = createAsyncThunk('cart/saveCart', async (cart) => {
   const userId = localStorage.getItem('userId');
   if (!userId) throw new Error("No userId found");
-  await axios.post(`http://localhost:3000/api/cart/${userId}`, { cart });
+  await axios.post(`${API}/api/cart/${userId}`, { cart });
   return cart;
 });
 
 export const clearCartBackend = createAsyncThunk('cart/clearCartBackend', async () => {
   const userId = localStorage.getItem('userId');
-  await axios.delete(`http://localhost:3000/api/cart/${userId}`);
+  await axios.delete(`${API}/api/cart/${userId}`);
   return [];
 });
 

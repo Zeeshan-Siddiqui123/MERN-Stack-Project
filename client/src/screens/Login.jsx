@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
 import { message } from 'antd';
+import { API } from '../../API';
 
 
 const Login = () => {
@@ -31,13 +32,13 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/login', data, {
+      const res = await axios.post(`${API}/login`, data, {
         withCredentials: true,
       });
 
       message.success({
         content: 'Login successful!',
-        duration: 2, // seconds
+        duration: 2, 
       });
 
       setError('');

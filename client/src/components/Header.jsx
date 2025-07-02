@@ -8,6 +8,7 @@ import { UserContext } from '../screens/UserContext';
 import { routes } from '../../Routes';
 import axios from 'axios';
 import MobileMenu from './MobileMenu';
+import { API } from '../../API';
 
 
 const Header = () => {
@@ -19,7 +20,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
+      await axios.post(`${API}}/logout`, {}, { withCredentials: true });
     } catch (err) {
       console.error('Logout failed:', err);
     }

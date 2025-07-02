@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API } from '../../API';
 
 const Edit = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const Edit = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/product/${id}`)
+    axios.get(`${API}/product/${id}`)
       .then(res => {
         const product = res.data;
         setData({
@@ -47,7 +48,7 @@ const Edit = () => {
     }
 
     try {
-      await axios.post(`http://localhost:3000/product/update/${id}`, data);
+      await axios.post(`${API}/product/update/${id}`, data);
       alert('Product updated successfully');
       navigate('/products');
     } catch (err) {

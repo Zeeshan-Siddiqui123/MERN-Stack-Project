@@ -11,6 +11,7 @@ import {
 import { MdDelete } from 'react-icons/md';
 import { Modal, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import { API } from '../../API';
 
 const Cart = () => {
   const cart = useSelector(state => state.cart.items);
@@ -94,7 +95,7 @@ const Cart = () => {
             >
               <div className="flex items-center gap-3">
                 <img
-                  src={`http://localhost:3000/images/uploads/${item.file}`}
+                  src={`${API}/images/uploads/${item.file}`}
                   className="w-14 h-14 rounded"
                   alt={item.title}
                 />

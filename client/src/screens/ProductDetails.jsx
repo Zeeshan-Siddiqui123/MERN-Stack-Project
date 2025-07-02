@@ -4,14 +4,15 @@ import axios from 'axios';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { LuBus } from 'react-icons/lu';
 import { Button, message, Spin } from 'antd';
-import { useDispatch } from 'react-redux'; // ✅ Redux
+import { useDispatch } from 'react-redux'; 
 import {  addToCartAndSave } from '../features/cart/cartSlice';
- // ✅ Adjust path if needed
+import { API } from '../../API';
+
 
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // ✅
+  const dispatch = useDispatch(); 
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
@@ -21,10 +22,10 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:3000/getproduct/${id}`);
+        const res = await axios.get(`${API}/getproduct/${id}`);
         setProduct(res.data);
 
-        const relatedRes = await axios.get(`http://localhost:3000/related/${res.data.category}/${res.data._id}`);
+        const relatedRes = await axios.get(`${API}/related/${res.data.category}/${res.data._id}`);
         setRelated(relatedRes.data);
       } catch (err) {
         console.error('Error fetching product:', err);
@@ -44,7 +45,7 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCartAndSave(product)); // ✅ Redux action
+    dispatch(addToCartAndSave(product)); 
     message.success(`${product.title} added to cart`);
   };
 
@@ -69,7 +70,7 @@ const ProductDetails = () => {
         {/* Image */}
         <div className="flex-1 flex justify-center">
           <img
-            src={`http://localhost:3000/images/uploads/${product.file}`}
+            src={`${API}/images/uploads/${product.file}`}
             alt={product.title}
             className="w-full max-w-[400px] h-[450px] object-cover rounded-xl"
           />
@@ -111,37 +112,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-
       {/* Related Products */}
-      {/* <div className='w-full mx-auto md:p-10 flex flex-col md:flex-row gap-10'>
-        {related.length > 0 && (
-          <div className="text-white flex-1">
-            <h2 className="text-3xl font-bold mb-6 text-white text-center">Related Products</h2>
-            <div className="flex items-center justify-center flex-wrap gap-3">
-              {related.map(item => (
-                <div key={item._id} className='w-[400px] bg-black p-3'>
-                  <div className="shadow-md p-4 w-[400px] flex items-center justify-center">
-                    <img
-                      src={`http://localhost:3000/images/uploads/${item.file}`}
-                      alt={item.title}
-                      className="w-full h-48 object-cover rounded"
-                    />
-                  </div>
-                  <div className='flex flex-col gap-2'>
-                    <h3 className="mt-2 font-semibold text-lg text-white">{item.title}</h3>
-                    <p className="text-white font-medium">Rs: {item.price}</p>
-                    <Link to={`/product-details/${item._id}`}>
-                      <button className='bg-white w-full text-black px-12 py-3 hover:bg-black hover:text-white border border-white cursor-pointer transition duration-300'>
-                        Order Now
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div> */}
       <h2 className="text-3xl font-bold mb-6 text-white text-center">Related Products</h2>
       <div className="flex flex-wrap justify-center">
         
@@ -156,7 +127,7 @@ const ProductDetails = () => {
               <div className="bg-black rounded-lg shadow-md p-3 h-full flex flex-col">
                 <div className="flex justify-center items-center mb-3">
                   <img
-                    src={`http://localhost:3000/images/uploads/${item.file}`}
+                    src={`${API}/images/uploads/${item.file}`}
                     alt={item.title}
                     className="w-full md:w-1/1 p-2 h-28 lg:h-48 md:h-48 object-cover rounded"
                   />

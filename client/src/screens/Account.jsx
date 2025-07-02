@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { API } from '../../API';
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -44,10 +45,10 @@ const Signup = () => {
     formData.append('email', email);
     formData.append('password', password);
     if (data.image) {
-      formData.append('file', data.image); // ✅ Use 'file' to match backend
+      formData.append('file', data.image); 
     }
 
-    const res = await axios.post('http://localhost:3000/register', formData, {
+    const res = await axios.post(`${API}/register`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import StatsCard from '../components/StatsCard';
 import AnalyticsChart from '../components/AnalyticsChart';
+import { API } from '../../API';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -18,9 +19,9 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const [usersRes, productsRes, ordersRes] = await Promise.all([
-          axios.get('http://localhost:3000/getusers'),
-          axios.get('http://localhost:3000/getproducts'),
-          axios.get('http://localhost:3000/orders'),
+          axios.get(`${API}/getusers`),
+          axios.get(`${API}/getproducts`),
+          axios.get(`${API}/orders`),
         ]);
 
         const totalRevenue = ordersRes.data.reduce(

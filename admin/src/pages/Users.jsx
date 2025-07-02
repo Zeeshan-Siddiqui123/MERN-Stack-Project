@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Spin, message } from 'antd';
+import { API } from '../../API';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -8,7 +9,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/getusers', {
+      const res = await axios.get(`${API}/getusers`, {
         withCredentials: true
       });
       setUsers(res.data || []);

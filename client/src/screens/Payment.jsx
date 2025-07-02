@@ -3,16 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Button, Modal, Spin } from 'antd';
-import {
-  FaShoppingBag, FaUser, FaMapMarkerAlt, FaCity,
-  FaPhoneAlt, FaEnvelope, FaCreditCard
-} from 'react-icons/fa';
+import {FaShoppingBag, FaUser, FaMapMarkerAlt, FaCity, FaPhoneAlt, FaEnvelope, FaCreditCard} from 'react-icons/fa';
+import { API } from '../../API';
 
 const PaymentPage = () => {
   const location = useLocation();
   const orderedProduct = location.state?.product || null;
 
-  const cart = useSelector(state => state.cart.items); // ✅ get cart from Redux
+  const cart = useSelector(state => state.cart.items); 
 
   const [products, setProducts] = useState([]);
   const [name, setName] = useState('');
@@ -35,7 +33,7 @@ const PaymentPage = () => {
   const handlePayment = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:3000/api/payments/initiate', {
+      const res = await axios.post(`${API}/api/payments/initiate`, {
         amount: total,
         orderId: 'ORD' + Date.now(),
         name,
@@ -73,7 +71,7 @@ const PaymentPage = () => {
                 <div key={`${item.id}-${index}`} className="flex items-center justify-between bg-[#2a2a2a] rounded-md p-3">
                   <div className="flex items-center gap-4">
                     <img
-                      src={`http://localhost:3000/images/uploads/${item.file}`}
+                      src={`${API}/images/uploads/${item.file}`}
                       alt={item.title}
                       className="w-14 h-14 object-cover rounded"
                     />

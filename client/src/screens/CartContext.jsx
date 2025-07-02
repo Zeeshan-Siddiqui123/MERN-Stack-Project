@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API } from '../../API';
 
 export const CartContext = createContext();
 
@@ -13,7 +14,7 @@ export const CartProvider = ({ children }) => {
     setUserId(uid);
 
     if (uid) {
-      axios.get(`http://localhost:3000/api/cart/${uid}`)
+      axios.get(`${API}/api/cart/${uid}`)
         .then(res => setCart(res.data.cart || []))
         .catch(err => console.error('Error loading cart:', err));
     } else {
@@ -24,7 +25,7 @@ export const CartProvider = ({ children }) => {
   // 👉 Sync to backend on change
   useEffect(() => {
     if (userId && cart.length >= 0) {
-      axios.post(`http://localhost:3000/api/cart/${userId}`, { cart })
+      axios.post(`${API}/api/cart/${userId}`, { cart })
         .catch(err => console.error('Error saving cart:', err));
     }
   }, [cart, userId]);
@@ -51,12 +52,12 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = async () => {
-    setCart([]); // frontend
+    setCart([]); 
     const uid = localStorage.getItem('userId');
     if (!uid) return;
 
     try {
-      await axios.delete(`http://localhost:3000/api/cart/${uid}`); // backend
+      await axios.delete(`${API}/api/cart/${uid}`); 
     } catch (err) {
       console.error('Error clearing cart from backend:', err);
     }

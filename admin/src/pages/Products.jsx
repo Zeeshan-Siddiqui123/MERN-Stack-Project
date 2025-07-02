@@ -4,6 +4,8 @@ import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API } from '../../API';
+
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -11,6 +13,7 @@ const Product = () => {
   const [submitting, setSubmitting] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const fileRef = useRef();
+
 
   const [data, setData] = useState({
     title: '',
@@ -30,7 +33,7 @@ const Product = () => {
   };
 
   const fetchProducts = () => {
-    axios.get('http://localhost:3000/getproducts')
+    axios.get(`${API}/getproducts`)
       .then(res => {
         setProducts(res.data || []);
         setLoading(false);
@@ -62,7 +65,7 @@ const Product = () => {
       formData.append('category', category);
       formData.append('file', image);
 
-      const res = await axios.post('http://localhost:3000/products', formData);
+      const res = await axios.post(`${API}/products`, formData);
       message.success(res.data.message || 'Product added successfully');
       setData({ title: '', price: '', description: '', category: '', image: null });
       fileRef.current.value = '';
@@ -84,7 +87,7 @@ const Product = () => {
       cancelText: 'Cancel',
       onOk: async () => {
         try {
-          await axios.delete(`http://localhost:3000/product/delete/${id}`);
+          await axios.delete(`${API}/product/delete/${id}`);
           message.success('Product deleted successfully');
           setProducts(products.filter(p => p._id !== id));
         } catch {
@@ -107,7 +110,7 @@ const Product = () => {
     key: 'file',
     render: (file) => (
       <img
-        src={`http://localhost:3000/images/uploads/${file}`}
+        src={`${API}/images/uploads/${file}`}
         alt="product"
         style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4 }}
       />

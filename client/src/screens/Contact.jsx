@@ -3,11 +3,13 @@ import { message } from 'antd';
 import { MdEmail, MdPerson, MdMessage, MdOutlinePhone } from 'react-icons/md';
 import axios from 'axios';
 import PrivateRoute from './PrivateRoute';
+import { API } from '../../API';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', message: ''
   });
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,7 +18,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/contact', formData);
+      await axios.post(`${API}/contact`, formData);
       message.success('Message sent successfully!');
       setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (err) {
