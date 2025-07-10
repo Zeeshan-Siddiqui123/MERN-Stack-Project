@@ -91,13 +91,13 @@ const Header = () => {
 
           {/* Auth */}
           {user ? (
-            <div className="flex items-center gap-3 text-white">
+            <div className="flex items-center  lg:flex-row md:flex-row gap-3 text-white">
               <img
                 src={user.image || '/images/default.png'}
                 alt="User"
                 className="w-10 h-10 rounded-full object-cover border"
               />
-              <div className="text-sm text-white typewriter">
+              <div className="text-sm text-white typewriter hidden lg:block md:black">
                 Hello, <span className="font-semibold ">{user.name}</span>
               </div>
               <IoIosLogOut

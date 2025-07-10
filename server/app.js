@@ -12,6 +12,7 @@ const Order = require("./models/Order")
 const mongoose = require('mongoose')
 const contactMessage = require("./controllers/contactform")
 const sendOtp = require("./controllers/sendotp")
+const { registerSchema } = require("./validators/authvalidations")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -29,33 +30,53 @@ app.get("/", (req, res) => {
 
 app.post('/register', upload.single('file'), async (req, res) => {
   try {
-    const { name, username, password, email } = req.body;
+    const parsed = registerSchema.safeParse(req.body);
+
+    if (!parsed.success) {
+      const firstError = parsed.error.errors[0].message;
+      return res.status(400).json({ message: firstError });
+    }
+
+    const { name, username, email, password } = parsed.data;
+
+    // Check existing user
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'This Email is Already Registered' });
     }
+
     const existingUsername = await userModel.findOne({ username });
     if (existingUsername) {
       return res.status(400).json({ message: 'This Username is not available, please try another' });
     }
+
+    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
+
+    // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const otpExpires = new Date(Date.now() + 5 * 60 * 1000);
+    const otpExpires = new Date(Date.now() + 5 * 60 * 1000); // 5 min
+
+    // Create user
     const user = await userModel.create({
-      username, 
-      name, 
-      email, 
-      file: req.file?.filename || '', 
+      username,
+      name,
+      email,
       password: hash,
-      otp, 
+      file: req.file?.filename || '',
+      otp,
       otpExpires
     });
-    await sendOtp( email, otp );
+
+    // Send OTP
+    await sendOtp(email, otp);
+
     res.status(201).json({ message: "OTP sent to email. Please verify to complete registration." });
+
   } catch (error) {
     console.error('Error creating user:', error);
-    res.status(500).json({ message: 'Server Error', error });
+    res.status(500).json({ message: 'Server Error' });
   }
 });
 
@@ -277,12 +298,25 @@ app.post('/contact', async (req, res) => {
   }
 });
 
-app.get('/orders', async (req, res) => {
+app.get('/orders/:userId', async (req, res) => {
+  const { userId } = req.params;
+
   try {
-    const orders = await Order.find().populate('user', 'name email');
-    res.json(orders);
+    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json(orders);
   } catch (err) {
-    res.status(500).json({ message: 'Server Error' });
+    console.error('Error fetching orders:', err);
+    res.status(500).json({ message: 'Server error while fetching orders' });
+  }
+});
+
+app.get('/admin/orders', async (req, res) => {
+  try {
+    const orders = await Order.find().sort({ createdAt: -1 });
+    res.status(200).json(orders);
+  } catch (err) {
+    console.error('Admin: Error fetching all orders:', err);
+    res.status(500).json({ message: 'Failed to fetch orders' });
   }
 });
 

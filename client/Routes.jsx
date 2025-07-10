@@ -3,6 +3,8 @@ import About from "./src/screens/About";
 import Contact from "./src/screens/Contact";
 import Home from "./src/screens/Index";
 import Product from "./src/screens/Product";
+import Orders from "./src/screens/Orders";
+import PrivateRoute from "./src/screens/PrivateRoute";
 
 export const routes = [
     {
@@ -19,6 +21,11 @@ export const routes = [
         path: '/products',
         screen : <Product/>,
         label: 'Shop'
+    },
+    {
+        path: '/orders',
+        screen : <PrivateRoute><Orders/></PrivateRoute>,
+        label: 'Your Orders'
     },
     {
         path: '/contact',

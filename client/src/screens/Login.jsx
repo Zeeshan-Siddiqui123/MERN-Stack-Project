@@ -38,7 +38,7 @@ const Login = () => {
 
       message.success({
         content: 'Login successful!',
-        duration: 2, 
+        duration: 2,
       });
 
       setError('');
@@ -49,7 +49,9 @@ const Login = () => {
 
       navigate('/');
     } catch (err) {
-      message.error(err.response?.data?.message || 'Login failed'); 
+      const errorMsg = err.response?.data?.message || 'Login failed';
+      setError(errorMsg);
+      message.error(errorMsg);
     }
   };
 
@@ -87,8 +89,8 @@ const Login = () => {
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md cursor-pointer transition"
           />
 
-          
-          {error && <p className="text-red-500 text-center">{error}</p>}
+
+          {error && <p className="text-red-500 text-center mt-2">{error}</p>}
 
           <p className="text-center text-gray-300 text-sm mt-4">
             Don&apos;t have an account?{' '}
